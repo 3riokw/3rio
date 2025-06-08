@@ -4,129 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3rio – Creative Design</title>
-
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <!-- tsParticles for animated background -->
+  <!-- tsParticles -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-
   <style>
     :root {
       --purple: #6E00FF;
       --orange: #FF4500;
       --white: #FFFFFF;
       --black: #000000;
+      --ray-opacity: 0.2;
       --transition: 0.3s ease;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Rubik', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
-
+    body { font-family:'Rubik',sans-serif; background:var(--black); color:var(--white); overflow-x:hidden; }
     /* Header */
-    header {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 1000;
-    }
-    header img { height: 48px; transition: transform var(--transition); }
-    header img:hover { transform: scale(1.2); }
-    nav ul { display: flex; gap: 1.5rem; list-style: none; }
-    nav li { cursor: pointer; font-weight: 500; transition: color var(--transition); }
-    nav li:hover { color: var(--orange); }
-
-    /* Hero Section */
-    #hero {
-      position: relative; height: 100vh; overflow: hidden;
-      background: url('assets/cover.jpg') center/cover no-repeat;
-    }
-    #tsparticles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-    .light-rays, .northern-lights {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
-    }
-    .light-rays {
-      background: radial-gradient(circle at 30% 30%, rgba(110,0,255,0.2), transparent 60%),
-                  radial-gradient(circle at 70% 70%, rgba(255,69,0,0.2), transparent 60%);
-      animation: rotateRays 20s linear infinite;
-    }
-    .northern-lights {
-      background: linear-gradient(120deg, rgba(110,0,255,0.15), transparent),
-                  linear-gradient(60deg, rgba(110,0,255,0.15), transparent);
-      mix-blend-mode: screen; opacity: 0;
-      animation: fadeInLights 5s ease forwards; animation-delay: 1s;
-    }
-    @keyframes rotateRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes fadeInLights { to { opacity: 1; } }
-
-    .hero-content {
-      position: relative; z-index: 1; text-align: center;
-      padding: 1rem; max-width: 700px; margin: 0 auto;
-      top: 50%; transform: translateY(-50%);
-    }
-    .hero-content h1 {
-      font-size: 3rem; letter-spacing: 1px;
-      text-shadow: 0 0 8px var(--orange);
-      animation: neonPulse 2s infinite; margin-bottom: 1rem;
-    }
-    @keyframes neonPulse {
-      0%, 100% { text-shadow: 0 0 8px var(--orange); }
-      50% { text-shadow: 0 0 20px var(--orange); }
-    }
-    .hero-content p {
-      font-size: 1rem; margin-bottom: 1.5rem;
-      white-space: pre-wrap; opacity: 0;
-      transition: opacity var(--transition);
-    }
-    .btn {
-      display: inline-block; padding: 0.75rem 1.5rem;
-      background: var(--purple); color: var(--white);
-      border-radius: 30px;
-      transition: background var(--transition), transform var(--transition);
-    }
-    .btn:hover { background: var(--orange); transform: translateY(-2px); }
-
+    header { position:fixed;top:0;left:0;width:100%;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:1000; }
+    header img { height:48px; transition:transform var(--transition);} 
+    header img:hover { transform:scale(1.2); }
+    nav ul { display:flex; gap:1.5rem; list-style:none; }
+    nav li { cursor:pointer; font-weight:500; transition:color var(--transition);} 
+    nav li:hover { color:var(--orange); }
+    /* Hero */
+    #hero { position:relative; height:100vh; background:url('assets/cover.jpg') center/cover no-repeat; overflow:hidden; }
+    #tsparticles { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; }
+    .light-rays { position:absolute; top:-20%; left:-20%; width:140%; height:140%; background: radial-gradient(circle at 30% 30%, rgba(110,0,255,var(--ray-opacity)), transparent 60%), radial-gradient(circle at 70% 70%, rgba(255,69,0,var(--ray-opacity)), transparent 60%); pointer-events:none; z-index:0; mix-blend-mode:screen; animation:rotateRays 20s linear infinite; }
+    @keyframes rotateRays { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+    .hero-content { position:relative; z-index:1; text-align:center; padding:1rem; max-width:700px; margin:0 auto; top:50%; transform:translateY(-50%);}  
+    .hero-content h1 { font-size:3rem; letter-spacing:1px; text-shadow:0 0 8px var(--orange); animation:neonPulse 2s infinite; margin-bottom:1rem; }
+    @keyframes neonPulse { 0%,100%{text-shadow:0 0 8px var(--orange);} 50%{text-shadow:0 0 20px var(--orange);} }
+    .hero-content p { font-size:1rem; margin-bottom:1.5rem; white-space:pre-wrap; opacity:0; transition:opacity var(--transition);}  
+    .btn { display:inline-block; padding:0.75rem 1.5rem; background:var(--purple); color:var(--white); border-radius:30px; transition:background var(--transition),transform var(--transition);} 
+    .btn:hover { background:var(--orange); transform:translateY(-2px);}   
     /* Sections */
-    section { padding: 6rem 2rem; position: relative; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    h2 { text-align: center; font-size: 2rem; margin-bottom: 2rem; }
-
+    section { padding:6rem 2rem; position:relative; }
+    .container { max-width:1100px; margin:0 auto; }
+    h2 { text-align:center; font-size:2rem; margin-bottom:2rem; }
     /* Inventory pop-up */
-    #inventory { opacity: 0; transform: scale(0.9); transition: opacity 0.6s ease, transform 0.6s ease; }
-    #inventory.visible { opacity: 1; transform: scale(1); }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-    .card { background: #111; border-radius: 8px; overflow: hidden; transition: transform var(--transition), box-shadow var(--transition); }
-    .card:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
-    .card img { width: 100%; display: block; }
-    .card h3 { padding: 1rem; font-size: 1.1rem; text-align: center; }
-
-    /* Before & After: fixed closing tag and square aspect */
-    .before-after { display: flex; flex-wrap: wrap; gap: 2rem; }
-    .ba-item { flex: 1; position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; }
-    .ba-item img { width: 100%; height: 100%; object-fit: cover; }
-    .ba-item::after { content: attr(data-label); position: absolute; top: 1rem; left: 1rem; background: var(--purple); color: var(--white); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; }
-
-    /* Event Section */
-    .event { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; }
-    .event img { flex: 1 1 300px; border-radius: 8px; }
-    .desc p { margin-bottom: 1rem; }
-    .event .btn { padding: 1rem 2rem; font-size: 1rem; }
-
+    #inventory { opacity:0; transform:scale(0.9); transition:opacity 0.6s ease,transform 0.6s ease; }
+    #inventory.visible { opacity:1; transform:scale(1); }
+    .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; }
+    .card { background:#111; border-radius:8px; overflow:hidden; transition:transform var(--transition),box-shadow var(--transition);} 
+    .card:hover { transform:translateY(-5px) scale(1.05); box-shadow:0 8px 20px rgba(0,0,0,0.3);} 
+    .card img { width:100%; display:block;} 
+    .card h3 { padding:1rem; font-size:1.1rem; text-align:center;}   
+    /* Before & After */
+    .before-after { display:flex; flex-wrap:wrap; gap:2rem; }
+    .ba-item { flex:1; aspect-ratio:1/1; overflow:hidden; border-radius:8px; position:relative; }
+    .ba-item img { width:100%; height:100%; object-fit:cover; }
+    .ba-item::after { content:attr(data-label); position:absolute; top:1rem; left:1rem; background:var(--purple); color:var(--white); padding:0.3rem 0.6rem; border-radius:4px; font-size:0.8rem;}  
+    /* Event */
+    .event { display:flex; flex-wrap:wrap; gap:2rem; align-items:center; }
+    .event img { flex:1 1 300px; border-radius:8px; }
+    .desc p { margin-bottom:1rem;} 
+    .event .btn { padding:1rem 2rem; font-size:1.1rem; }
     /* Templates Carousel */
-    .templates { display: flex; justify-content: center; align-items: center; overflow-x: auto; gap: 1.5rem; padding-bottom: 1rem; scroll-snap-type: x mandatory; }
-    .templates img { scroll-snap-align: center; min-width: 240px; height: 240px; object-fit: cover; border-radius: 8px; transition: transform var(--transition); }
-    .templates img:hover { transform: scale(1.1); }
-    .templates::-webkit-scrollbar { display: none; }
-
+    .templates { display:flex; justify-content:center; align-items:center; overflow-x:auto; gap:1.5rem; padding-bottom:1rem; scroll-snap-type:x mandatory; }
+    .templates img { scroll-snap-align:center; min-width:240px; height:240px; object-fit:cover; border-radius:8px; transition:transform var(--transition);} 
+    .templates img:hover { transform:scale(1.1);} 
+    .templates::-webkit-scrollbar { display:none;}  
     /* Offer */
-    .offer-banner { background: var(--purple); color: var(--white); text-align: center; padding: 2rem; border-radius: 8px; }
-
-    /* Visualizer Canvas */
-    #visualizer { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); width: 80%; height: 100px; pointer-events: none; z-index: 999; }
-
+    .offer-banner { background:var(--purple); color:var(--white); text-align:center; padding:2rem; border-radius:8px;}  
     /* Footer */
-    footer { text-align: center; padding: 2rem; background: #111; }
-    footer a { color: var(--purple); }
-
-    @media (max-width: 768px) { .before-after { flex-direction: column; } }
+    footer { text-align:center; padding:2rem; background:#111;} 
+    footer a { color:var(--purple);} 
+    @media(max-width:768px){ .before-after{flex-direction:column;} }
   </style>
 </head>
 <body>
@@ -144,21 +88,15 @@
       </ul>
     </nav>
   </header>
-
-  <!-- Hero -->
   <section id="hero">
     <div id="tsparticles"></div>
     <div class="light-rays"></div>
-    <div class="northern-lights"></div>
-    <canvas id="visualizer"></canvas>
     <div class="hero-content">
       <h1>Feel the glow – Powered by 3rio</h1>
       <p id="subheading"></p>
       <a href="#inventory" class="btn">Explore Work</a>
     </div>
   </section>
-
-  <!-- Inventory -->
   <section id="inventory">
     <div class="container">
       <h2>Featured Creations</h2>
@@ -169,8 +107,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Before & After -->
   <section id="portfolio">
     <div class="container">
       <h2>Before & After Transformations</h2>
@@ -182,8 +118,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Event -->
   <section id="event">
     <div class="container event">
       <h2>Free Friday Giveaway</h2>
@@ -194,8 +128,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Templates -->
   <section id="templates">
     <div class="container">
       <h2>Instagram Templates Gallery</h2>
@@ -207,8 +139,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Offer -->
   <section id="offer">
     <div class="container offer-banner">
       <h2>Special Thumbnail Package</h2>
@@ -216,50 +146,29 @@
       <a href="mailto:3riokw@gmail.com" class="btn">Book Yours</a>
     </div>
   </section>
-
-  <!-- Footer -->
   <footer id="contact">
     <p>Follow: <a href="https://instagram.com/3riokw" target="_blank">@3riokw</a></p>
     <p>Email: <a href="mailto:3riokw@gmail.com">3riokw@gmail.com</a></p>
   </footer>
-
   <script>
-    // tsParticles background
-    tsParticles.load('tsparticles', {
-      particles: { number: { value: 60 }, size: { value: 3 }, move: { enable: true, speed: 0.5 } },
-      interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } }
-    });
-
-    // Typewriter effect + sound
-    const text = "From logos to menus, we bring the wow to your workflow";
-    const sub = document.getElementById('subheading');
-    let idx = 0;
-    const sound = new Audio('assets/typewriter.mp3');
-    sound.volume = 0.2;
-    function type() {
-      sub.style.opacity = 1;
-      if (idx < text.length) {
-        sub.textContent += text[idx++];
-        const s = sound.cloneNode(); s.play().catch(()=>{});
-        setTimeout(type, 80);
-      }
-    }
-    window.addEventListener('load', ()=>setTimeout(type,500));
-
-    // Inventory pop-up effect
-    const inv = document.getElementById('inventory');
-    new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) inv.classList.add('visible'); }); }, { threshold:0.3 }).observe(inv);
-
-    // Audio visualizer
-    const canvas = document.getElementById('visualizer'); const ctx = canvas.getContext('2d');
-    function initVisualizer(){ navigator.mediaDevices.getUserMedia({audio:true})
-      .then(stream=>{ const audioCtx=new AudioContext(); const src=audioCtx.createMediaStreamSource(stream); const analyser=audioCtx.createAnalyser(); analyser.fftSize=256; src.connect(analyser); const bufferLength=analyser.frequencyBinCount; const dataArray=new Uint8Array(bufferLength);
-        function draw(){ requestAnimationFrame(draw); analyser.getByteFrequencyData(dataArray); ctx.clearRect(0,0,canvas.width,canvas.height); const barWidth=(canvas.width/bufferLength)*2.5; dataArray.forEach((val,i)=>{ const barHeight=val/255*canvas.height; ctx.fillStyle='rgba(110,0,255,0.7)'; ctx.fillRect(i*barWidth,canvas.height-barHeight,barWidth,barHeight); }); }
-        draw(); }).catch(console.error);
-    }
-    function resizeCanvas(){ canvas.width=window.innerWidth*0.8; canvas.height=100; }
-    window.addEventListener('resize',resizeCanvas); resizeCanvas(); initVisualizer();
-
+    // Load particles
+    tsParticles.load('tsparticles',{ particles:{ number:{value:60},size:{value:3},move:{enable:true,speed:0.5}}, interactivity:{events:{onhover:{enable:true,mode:'repulse'}}}});
+    // Typewriter
+    const text="From logos to menus, we bring the wow to your workflow";
+    const sub=document.getElementById('subheading'); let idx=0;
+    const sound=new Audio('assets/typewriter.mp3'); sound.volume=0.2;
+    function type(){ sub.style.opacity=1; if(idx<text.length){ sub.textContent+=text[idx++]; new Audio('assets/typewriter.mp3').play().catch(()=>{}); setTimeout(type,80);} }
+    window.addEventListener('load',()=>setTimeout(type,500));
+    // Ray visualizer
+    navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+      const audioCtx=new (window.AudioContext||window.webkitAudioContext)(); const src=audioCtx.createMediaStreamSource(stream); const analyser=audioCtx.createAnalyser(); analyser.fftSize=128; src.connect(analyser);
+      const data=new Uint8Array(analyser.frequencyBinCount);
+      const rays=document.querySelector('.light-rays');
+      function draw(){ requestAnimationFrame(draw); analyser.getByteFrequencyData(data); let sum=0; data.forEach(v=>sum+=v); let avg=sum/data.length/255; document.documentElement.style.setProperty('--ray-opacity', 0.1+avg*0.4); }
+      draw();
+    }).catch(console.error);
+    // Inventory pop-up
+    const inv=document.getElementById('inventory'); new IntersectionObserver(entries=>entries.forEach(e=>e.isIntersecting&&inv.classList.add('visible')), {threshold:0.3}).observe(inv);
     function scrollTo(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
   </script>
 </body>
