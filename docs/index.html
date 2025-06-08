@@ -7,10 +7,8 @@
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <!-- tsParticles -->
+  <!-- tsParticles for animated background -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-  <!-- Howler.js for audio -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 
   <style>
     :root {
@@ -24,18 +22,22 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Rubik', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
 
+    /* Header */
     header {
       position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 2rem;
       display: flex; justify-content: space-between; align-items: center;
       background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 1000;
     }
-    header img { height: 32px; }
-    nav ul { display: flex; gap: 1.5rem; }
+    header img { height: 48px; }
+    nav ul { display: flex; gap: 1.5rem; list-style: none; }
     nav li { cursor: pointer; font-weight: 500; transition: color var(--transition); }
     nav li:hover { color: var(--orange); }
 
     /* Hero Section */
-    #hero { position: relative; height: 100vh; overflow: hidden; }
+    #hero {
+      position: relative; height: 100vh; overflow: hidden;
+      background: url('assets/cover.jpg') center/cover no-repeat;
+    }
     #tsparticles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
     .hero-content {
       position: relative; z-index: 1; text-align: center;
@@ -54,8 +56,7 @@
     }
     .hero-content p {
       font-size: 1rem; margin-bottom: 1.5rem;
-      opacity: 0; white-space: pre-wrap;
-      transition: opacity 0.3s ease;
+      white-space: pre-wrap; opacity: 0;
     }
     .btn {
       display: inline-block; padding: 0.75rem 1.5rem;
@@ -65,10 +66,22 @@
     }
     .btn:hover { background: var(--orange); transform: translateY(-2px); }
 
-    section { padding: 6rem 2rem; }
+    /* Purple Light Rays Overlay */
+    .light-rays {
+      position: absolute; top: -25%; left: -25%; width: 150%; height: 150%;
+      background: radial-gradient(circle at 30% 30%, rgba(110,0,255,0.2), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(255,69,0,0.2), transparent 60%);
+      pointer-events: none; z-index: 0;
+      animation: rotateRays 20s linear infinite;
+    }
+    @keyframes rotateRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* Section Layouts */
+    section { padding: 6rem 2rem; position: relative; }
     .container { max-width: 1100px; margin: 0 auto; }
     h2 { text-align: center; font-size: 2rem; margin-bottom: 2rem; }
 
+    /* Featured Work Grid */
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -82,40 +95,59 @@
     .card img { width: 100%; display: block; }
     .card h3 { padding: 1rem; font-size: 1.1rem; }
 
-    .before-after { display: flex; flex-wrap: wrap; gap: 2rem; }
-    .ba-item { flex: 1 1 45%; position: relative; }
-    .ba-item img { width: 100%; border-radius: 8px; }
+    /* Before & After Equal Height */
+    .before-after {
+      display: flex; flex-wrap: wrap; gap: 2rem; align-items: stretch;
+    }
+    .ba-item {
+      flex: 1; position: relative; height: 400px; overflow: hidden;
+      border-radius: 8px;
+    }
+    .ba-item img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
     .ba-item::after {
-      content: attr(data-label);
-      position: absolute; top: 1rem; left: 1rem;
+      content: attr(data-label); position: absolute; top: 1rem; left: 1rem;
       background: var(--purple); color: var(--white);
       padding: 0.3rem 0.6rem; border-radius: 4px;
       font-size: 0.8rem;
     }
 
-    .event { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; }
+    /* Event Section */
+    .event {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;
+    }
     .event img { flex: 1 1 300px; border-radius: 8px; }
     .desc p { margin-bottom: 1rem; }
 
+    /* Templates Carousel */
     .templates {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
+      display: flex; overflow-x: auto; gap: 1.5rem; padding-bottom: 1rem;
+      scroll-snap-type: x mandatory;
     }
+    .templates img {
+      scroll-snap-align: start; min-width: 200px; height: 200px;
+      object-fit: cover; border-radius: 8px;
+    }
+    .templates::-webkit-scrollbar { display: none; }
 
+    /* Offer Banner */
     .offer-banner {
       background: var(--purple); color: var(--white);
       text-align: center; padding: 2rem; border-radius: 8px;
     }
 
-    footer {
-      text-align: center; padding: 2rem; background: #111;
+    /* Visualizer Canvas */
+    #visualizer {
+      position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+      width: 80%; height: 100px; pointer-events: none; z-index: 999;
     }
+
+    /* Footer */
+    footer { text-align: center; padding: 2rem; background: #111; }
     footer a { color: var(--purple); }
 
-    @media (max-width: 768px) {
-      .before-after { flex-direction: column; }
-    }
+    @media (max-width: 768px) { .before-after { flex-direction: column; } }
   </style>
 </head>
 <body>
@@ -137,6 +169,8 @@
   <!-- Hero -->
   <section id="hero">
     <div id="tsparticles"></div>
+    <div class="light-rays"></div>
+    <canvas id="visualizer"></canvas>
     <div class="hero-content">
       <h1>Feel the glow – Powered by 3rio</h1>
       <p id="subheading"></p>
@@ -159,8 +193,7 @@
   <!-- Before & After -->
   <section id="portfolio">
     <div class="container">
-      <h2>Before & After Transformations</h2>
-      <div class="before-after">
+      <h2>Before & After Transformations</n      <div class="before-after">
         <div class="ba-item" data-label="Before"><img src="assets/before1.jpg" alt=""></div>
         <div class="ba-item" data-label="After"><img src="assets/after1.jpg" alt=""></div>
       </div>
@@ -208,31 +241,63 @@
   </footer>
 
   <script>
-    // Initialize tsParticles
+    // tsParticles background
     tsParticles.load('tsparticles', {
       particles: { number: { value: 60 }, size: { value: 3 }, move: { enable: true, speed: 0.5 } },
       interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } }
     });
 
-    // Typewriter effect with sound
+    // Typewriter effect + sound
     const text = "From logos to menus, we bring the wow to your workflow";
     const sub = document.getElementById('subheading');
     let idx = 0;
-    const sound = new Howl({ src: ['assets/typewriter.mp3'], volume: 0.2 });
+    const sound = new Audio('assets/typewriter.mp3');
+    sound.volume = 0.2;
     function type() {
+      sub.style.opacity = 1;
       if (idx < text.length) {
         sub.textContent += text[idx++];
-        sound.play();
+        const s = sound.cloneNode(); s.play().catch(() => {});
         setTimeout(type, 80);
-      } else {
-        sub.style.opacity = 1;
       }
     }
     window.addEventListener('load', () => setTimeout(type, 500));
 
-    function scrollTo(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    // Audio visualizer from mic
+    const canvas = document.getElementById('visualizer');
+    const ctx = canvas.getContext('2d');
+    function initVisualizer() {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          const audioCtx = new AudioContext();
+          const src = audioCtx.createMediaStreamSource(stream);
+          const analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 256;
+          src.connect(analyser);
+          const bufferLength = analyser.frequencyBinCount;
+          const dataArray = new Uint8Array(bufferLength);
+          function draw() {
+            requestAnimationFrame(draw);
+            analyser.getByteFrequencyData(dataArray);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            dataArray.forEach((val, i) => {
+              const barHeight = val / 255 * canvas.height;
+              ctx.fillStyle = 'rgba(110,0,255,0.7)';
+              ctx.fillRect(i * barWidth, canvas.height - barHeight, barWidth, barHeight);
+            });
+          }
+          draw();
+        })
+        .catch(console.error);
     }
+    // Resize canvas to fit
+    function resizeCanvas() { canvas.width = window.innerWidth * 0.8; canvas.height = 100; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    initVisualizer();
+
+    function scrollTo(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
   </script>
 </body>
 </html>
