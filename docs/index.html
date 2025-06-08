@@ -17,75 +17,359 @@
       --ray-opacity: 0.2;
       --transition: 0.3s ease;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Rubik', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+    
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    html { 
+      scroll-behavior: smooth; 
+    }
+    
+    body { 
+      font-family: 'Rubik', sans-serif; 
+      background: var(--black); 
+      color: var(--white); 
+      overflow-x: hidden; 
+    }
 
     /* Header */
-    header { position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 1000; }
-    header img { height: 48px; transition: transform var(--transition); cursor: pointer; }
-    header img:hover { transform: scale(1.2); }
-    nav ul { display: flex; gap: 1.5rem; list-style: none; }
-    nav li { cursor: pointer; font-weight: 500; transition: color var(--transition); }
-    nav li:hover { color: var(--orange); }
+    header { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      padding: 1rem 2rem; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      background: rgba(0,0,0,0.6); 
+      backdrop-filter: blur(6px); 
+      z-index: 1000; 
+    }
+    
+    header img { 
+      height: 48px; 
+      transition: transform var(--transition); 
+      cursor: pointer; 
+    }
+    
+    header img:hover { 
+      transform: scale(1.2); 
+    }
+    
+    nav ul { 
+      display: flex; 
+      gap: 1.5rem; 
+      list-style: none; 
+    }
+    
+    nav li { 
+      cursor: pointer; 
+      font-weight: 500; 
+      transition: color var(--transition); 
+    }
+    
+    nav li:hover { 
+      color: var(--orange); 
+    }
 
     /* Hero Section */
-    #hero { position: relative; height: 100vh; background: url('assets/cover.jpg') center/cover no-repeat; overflow: hidden; }
-    #tsparticles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-    .light-rays { position: absolute; top: -20%; left: -20%; width: 140%; height: 140%; background: radial-gradient(circle at 30% 30%, rgba(110,0,255,var(--ray-opacity)), transparent 60%), radial-gradient(circle at 70% 70%, rgba(255,69,0,var(--ray-opacity)), transparent 60%); pointer-events: none; z-index: 0; mix-blend-mode: screen; animation: rotateRays 20s linear infinite; }
-    @keyframes rotateRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .hero-content { position: relative; z-index: 1; text-align: center; padding: 1rem; max-width: 700px; margin: 0 auto; top: 50%; transform: translateY(-50%); }
-    .hero-content h1 { font-size: 3rem; letter-spacing: 1px; text-shadow: 0 0 8px var(--orange); animation: neonPulse 2s infinite; margin-bottom: 1rem; }
-    @keyframes neonPulse { 0%,100% { text-shadow: 0 0 8px var(--orange); } 50% { text-shadow: 0 0 20px var(--orange); } }
-    .hero-content p { font-size: 1rem; margin-bottom: 1.5rem; white-space: pre-wrap; opacity: 0; transition: opacity var(--transition); }
-    .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--purple); color: var(--white); border-radius: 30px; transition: background var(--transition), transform var(--transition); text-decoration: none; }
-    .btn:hover { background: var(--orange); transform: translateY(-2px); }
+    #hero { 
+      position: relative; 
+      height: 100vh; 
+      background: url('assets/cover.jpg') center/cover no-repeat; 
+      overflow: hidden; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #tsparticles { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      z-index: 0; 
+    }
+    
+    .light-rays { 
+      position: absolute; 
+      top: -20%; 
+      left: -20%; 
+      width: 140%; 
+      height: 140%; 
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(110,0,255,var(--ray-opacity)), transparent 60%), 
+        radial-gradient(circle at 70% 70%, rgba(255,69,0,var(--ray-opacity)), transparent 60%); 
+      pointer-events: none; 
+      z-index: 0; 
+      mix-blend-mode: screen; 
+      animation: rotateRays 20s linear infinite; 
+    }
+    
+    @keyframes rotateRays { 
+      from { transform: rotate(0deg); } 
+      to { transform: rotate(360deg); } 
+    }
+    
+    .hero-content { 
+      position: relative; 
+      z-index: 1; 
+      text-align: center; 
+      padding: 1rem; 
+      max-width: 700px; 
+      margin: 0 auto; 
+    }
+    
+    .hero-content h1 { 
+      font-size: clamp(2rem, 5vw, 3rem); 
+      letter-spacing: 1px; 
+      text-shadow: 0 0 8px var(--orange); 
+      animation: neonPulse 2s infinite; 
+      margin-bottom: 1rem; 
+    }
+    
+    @keyframes neonPulse { 
+      0%, 100% { text-shadow: 0 0 8px var(--orange); } 
+      50% { text-shadow: 0 0 20px var(--orange); } 
+    }
+    
+    .hero-content p { 
+      font-size: 1rem; 
+      margin-bottom: 1.5rem; 
+      white-space: pre-wrap; 
+      opacity: 0; 
+      transition: opacity var(--transition); 
+    }
+    
+    .btn { 
+      display: inline-block; 
+      padding: 0.75rem 1.5rem; 
+      background: var(--purple); 
+      color: var(--white); 
+      border-radius: 30px; 
+      transition: background var(--transition), transform var(--transition); 
+      text-decoration: none; 
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn:hover { 
+      background: var(--orange); 
+      transform: translateY(-2px); 
+    }
 
     /* Sections common */
-    section { padding: 6rem 2rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    h2 { text-align: center; font-size: 2rem; margin-bottom: 2rem; }
+    section { 
+      padding: 6rem 2rem; 
+    }
+    
+    .container { 
+      max-width: 1100px; 
+      margin: 0 auto; 
+    }
+    
+    h2 { 
+      text-align: center; 
+      font-size: 2rem; 
+      margin-bottom: 2rem; 
+    }
 
     /* Inventory pop-up */
-    #inventory { opacity: 0; transform: scale(0.9); transition: opacity 0.6s ease, transform 0.6s ease; }
-    #inventory.visible { opacity: 1; transform: scale(1); }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 2rem; }
-    .card { background: #111; border-radius: 8px; overflow: hidden; transition: transform var(--transition), box-shadow var(--transition); }
-    .card:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
-    .card img { width: 100%; display: block; }
-    .card h3 { padding: 1rem; font-size: 1.1rem; text-align: center; }
+    #inventory { 
+      opacity: 0; 
+      transform: scale(0.9); 
+      transition: opacity 0.6s ease, transform 0.6s ease; 
+    }
+    
+    #inventory.visible { 
+      opacity: 1; 
+      transform: scale(1); 
+    }
+    
+    .grid-3 { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 2rem; 
+    }
+    
+    .card { 
+      background: #111; 
+      border-radius: 8px; 
+      overflow: hidden; 
+      transition: transform var(--transition), box-shadow var(--transition); 
+    }
+    
+    .card:hover { 
+      transform: translateY(-5px) scale(1.05); 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+    }
+    
+    .card img { 
+      width: 100%; 
+      display: block; 
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .card h3 { 
+      padding: 1rem; 
+      font-size: 1.1rem; 
+      text-align: center; 
+    }
 
     /* Before & After Section */
-    .before-after { display: flex; flex-wrap: wrap; gap: 2rem; }
-    .ba-item { flex: 1; aspect-ratio: 1; overflow: hidden; border-radius: 8px; position: relative; }
-    .ba-item img { width: 100%; height: 100%; object-fit: cover; }
-    .ba-item::after { content: attr(data-label); position: absolute; top: 1rem; left: 1rem; background: var(--purple); color: var(--white); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; }
+    .before-after { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 2rem; 
+    }
+    
+    .ba-item { 
+      flex: 1; 
+      aspect-ratio: 1; 
+      overflow: hidden; 
+      border-radius: 8px; 
+      position: relative; 
+      min-width: 250px;
+    }
+    
+    .ba-item img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+    }
+    
+    .ba-item::after { 
+      content: attr(data-label); 
+      position: absolute; 
+      top: 1rem; 
+      left: 1rem; 
+      background: var(--purple); 
+      color: var(--white); 
+      padding: 0.3rem 0.6rem; 
+      border-radius: 4px; 
+      font-size: 0.8rem; 
+    }
 
     /* Event Section */
-    .event { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; }
-    .event img { flex: 1 1 300px; border-radius: 8px; }
-    .desc p { margin-bottom: 1rem; }
-    .event .btn { padding: 1rem 2rem; font-size: 1.1rem; }
+    .event { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 2rem; 
+      align-items: center; 
+    }
+    
+    .event img { 
+      flex: 1 1 300px; 
+      border-radius: 8px; 
+      max-width: 100%;
+      height: auto;
+    }
+    
+    .event .desc {
+      flex: 1 1 300px;
+    }
+    
+    .desc p { 
+      margin-bottom: 1rem; 
+    }
+    
+    .event .btn { 
+      padding: 1rem 2rem; 
+      font-size: 1.1rem; 
+    }
 
     /* Templates Carousel */
-    .templates { display: flex; justify-content: center; align-items: center; overflow-x: auto; gap: 1.5rem; padding-bottom: 1rem; scroll-snap-type: x mandatory; }
-    .templates img { scroll-snap-align: center; min-width: 240px; height: 240px; object-fit: cover; border-radius: 8px; transition: transform var(--transition); }
-    .templates img:hover { transform: scale(1.1); }
-    .templates::-webkit-scrollbar { display: none; }
+    .templates { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      overflow-x: auto; 
+      gap: 1.5rem; 
+      padding-bottom: 1rem; 
+      scroll-snap-type: x mandatory; 
+    }
+    
+    .templates img { 
+      scroll-snap-align: center; 
+      min-width: 240px; 
+      height: 240px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+      transition: transform var(--transition); 
+    }
+    
+    .templates img:hover { 
+      transform: scale(1.1); 
+    }
+    
+    .templates::-webkit-scrollbar { 
+      display: none; 
+    }
 
     /* Offer Section */
-    .offer-banner { background: var(--purple); color: var(--white); text-align: center; padding: 2rem; border-radius: 8px; }
+    .offer-banner { 
+      background: var(--purple); 
+      color: var(--white); 
+      text-align: center; 
+      padding: 2rem; 
+      border-radius: 8px; 
+    }
 
     /* Footer */
-    footer { text-align: center; padding: 2rem; background: #111; }
-    footer a { color: var(--purple); }
+    footer { 
+      text-align: center; 
+      padding: 2rem; 
+      background: #111; 
+    }
+    
+    footer a { 
+      color: var(--purple); 
+      text-decoration: none;
+    }
+    
+    footer a:hover {
+      color: var(--orange);
+    }
 
-    @media (max-width: 768px) { .before-after { flex-direction: column; } }
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) { 
+      .before-after { 
+        flex-direction: column; 
+      }
+      
+      header {
+        padding: 1rem;
+      }
+      
+      nav ul {
+        gap: 0.8rem;
+        font-size: 0.9rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      section {
+        padding: 4rem 1rem;
+      }
+      
+      .event {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/logo.png" alt="3rio logo">
+    <img src="assets/logo.png" alt="3rio logo" onerror="this.style.display='none'">
     <nav>
       <ul>
         <li onclick="scrollTo('hero')">Home</li>
@@ -115,9 +399,18 @@
     <div class="container">
       <h2>Featured Creations</h2>
       <div class="grid-3">
-        <div class="card"><img src="assets/inventory1.jpg" alt=""><h3>Thumbnail Magic</h3></div>
-        <div class="card"><img src="assets/inventory2.jpg" alt=""><h3>Logo Craft</h3></div>
-        <div class="card"><img src="assets/inventory3.jpg" alt=""><h3>Template Suite</h3></div>
+        <div class="card">
+          <img src="assets/inventory1.jpg" alt="Thumbnail Magic" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+          <h3>Thumbnail Magic</h3>
+        </div>
+        <div class="card">
+          <img src="assets/inventory2.jpg" alt="Logo Craft" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+          <h3>Logo Craft</h3>
+        </div>
+        <div class="card">
+          <img src="assets/inventory3.jpg" alt="Template Suite" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+          <h3>Template Suite</h3>
+        </div>
       </div>
     </div>
   </section>
@@ -127,22 +420,32 @@
     <div class="container">
       <h2>Before & After Transformations</h2>
       <div class="before-after">
-        <div class="ba-item" data-label="Before"><img src="assets/before1.jpg" alt=""></div>
-        <div class="ba-item" data-label="After"><img src="assets/after1.jpg" alt=""></div>
-        <div class="ba-item" data-label="Before"><img src="assets/before2.jpg" alt=""></div>
-        <div class="ba-item" data-label="After"><img src="assets/after2.jpg" alt=""></div>
+        <div class="ba-item" data-label="Before">
+          <img src="assets/before1.jpg" alt="Before transformation" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJlZm9yZTwvdGV4dD48L3N2Zz4='">
+        </div>
+        <div class="ba-item" data-label="After">
+          <img src="assets/after1.jpg" alt="After transformation" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFmdGVyPC90ZXh0Pjwvc3ZnPg=='">
+        </div>
+        <div class="ba-item" data-label="Before">
+          <img src="assets/before2.jpg" alt="Before transformation" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJlZm9yZTwvdGV4dD48L3N2Zz4='">
+        </div>
+        <div class="ba-item" data-label="After">
+          <img src="assets/after2.jpg" alt="After transformation" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFmdGVyPC90ZXh0Pjwvc3ZnPg=='">
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Event -->
   <section id="event">
-    <div class="container event">
+    <div class="container">
       <h2>Free Friday Giveaway</h2>
-      <img src="assets/event.jpg" alt="">
-      <div class="desc">
-        <p>Be among the first 10 to comment on our Instagram & win a free design pack!</p>
-        <a href="https://instagram.com/3riokw" class="btn" target="_blank">Join Now</a>
+      <div class="event">
+        <img src="assets/event.jpg" alt="Free Friday Giveaway" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSI1MCUiIGZpbGw9IiNGRjQ1MDAiLz48cmVjdCB5PSI1MCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjUwJSIgZmlsbD0iIzZFMDBGRiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FdmVudDwvdGV4dD48L3N2Zz4='">
+        <div class="desc">
+          <p>Be among the first 10 to comment on our Instagram & win a free design pack!</p>
+          <a href="https://instagram.com/3riokw" class="btn" target="_blank" rel="noopener noreferrer">Join Now</a>
+        </div>
       </div>
     </div>
   </section>
@@ -152,78 +455,74 @@
     <div class="container">
       <h2>Instagram Templates Gallery</h2>
       <div class="templates">
-        <img src="assets/template1.jpg" alt="">
-        <img src="assets/template2.jpg" alt="">
-        <img src="assets/template3.jpg" alt="">
-        <img src="assets/template4.jpg" alt="">
+        <img src="assets/template1.jpg" alt="Template 1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRlbXBsYXRlIDE8L3RleHQ+PC9zdmc+'">
+        <img src="assets/template2.jpg" alt="Template 2" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkY0NTAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRlbXBsYXRlIDI8L3RleHQ+PC9zdmc+'">
+        <img src="assets/template3.jpg" alt="Template 3" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRlbXBsYXRlIDM8L3RleHQ+PC9zdmc+'">
+        <img src="assets/template4.jpg" alt="Template 4" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkY0NTAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRlbXBsYXRlIDQ8L3RleHQ+PC9zdmc+'">
       </div>
     </div>
   </section>
 
   <!-- Offer -->
   <section id="offer">
-    <div class="container offer-banner">
-      <h2>Special Thumbnail Package</h2>
-      <p>5.900 KWD – 2–3 day delivery. Limited availability.</p>
-      <a href="mailto:3riokw@gmail.com" class="btn">Book Yours</a>
+    <div class="container">
+      <div class="offer-banner">
+        <h2>Special Thumbnail Package</h2>
+        <p>5.900 KWD – 2–3 day delivery. Limited availability.</p>
+        <br>
+        <a href="mailto:3riokw@gmail.com" class="btn">Book Yours</a>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer id="contact">
-    <p>Follow: <a href="https://instagram.com/3riokw" target="_blank">@3riokw</a></p>
+    <p>Follow: <a href="https://instagram.com/3riokw" target="_blank" rel="noopener noreferrer">@3riokw</a></p>
     <p>Email: <a href="mailto:3riokw@gmail.com">3riokw@gmail.com</a></p>
   </footer>
 
   <script>
-    // tsParticles initialization
-    tsParticles.load('tsparticles', {
-      particles: { number: { value: 60 }, size: { value: 3 }, move: { enable: true, speed: 0.5 } },
-      interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } }
-    });
+    // tsParticles initialization with error handling
+    if (typeof tsParticles !== 'undefined') {
+      tsParticles.load('tsparticles', {
+        particles: { 
+          number: { value: 60 }, 
+          size: { value: 3 }, 
+          move: { enable: true, speed: 0.5 },
+          color: { value: ["#6E00FF", "#FF4500"] },
+          opacity: { value: 0.7 }
+        },
+        interactivity: { 
+          events: { 
+            onhover: { enable: true, mode: 'repulse' } 
+          } 
+        }
+      }).catch(console.error);
+    }
 
-    // Typewriter effect
+    // Typewriter effect with error handling
     const text = "From logos to menus, we bring the wow to your workflow";
     const sub = document.getElementById('subheading');
     let idx = 0;
+    
     function type() {
+      if (!sub) return;
       sub.style.opacity = 1;
       if (idx < text.length) {
         sub.textContent += text[idx++];
-        const click = new Audio('assets/typewriter.mp3');
-        click.volume = 0.2;
-        click.play().catch(() => {});
+        
+        // Optional typewriter sound (won't break if file doesn't exist)
+        try {
+          const click = new Audio('assets/typewriter.mp3');
+          click.volume = 0.2;
+          click.play().catch(() => {}); // Silently fail if audio can't play
+        } catch (e) {
+          // Audio file doesn't exist or can't load - that's okay
+        }
+        
         setTimeout(type, 80);
       }
     }
-    window.addEventListener('load', () => setTimeout(type, 500));
-
-    // Light-rays visualizer driven by microphone input
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const src = audioCtx.createMediaStreamSource(stream);
-        const analyser = audioCtx.createAnalyser(); analyser.fftSize = 128;
-        src.connect(analyser);
-        const data = new Uint8Array(analyser.frequencyBinCount);
-        function animateRays() {
-          requestAnimationFrame(animateRays);
-          analyser.getByteFrequencyData(data);
-          const avg = data.reduce((sum, value) => sum + value, 0) / data.length / 255;
-          document.documentElement.style.setProperty('--ray-opacity', 0.1 + avg * 0.5);
-        }
-        animateRays();
-      })
-      .catch(console.error);
-
-    // Inventory pop-up animation
-    const inv = document.getElementById('inventory');
-    new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) inv.classList.add('visible'); });
-    }, { threshold: 0.3 }).observe(inv);
-
-    // Smooth scroll handler
-    function scrollTo(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
-  </script>
-</body>
-</html>
+    
+    // Start typewriter effect after page loads
+    window
