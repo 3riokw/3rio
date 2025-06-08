@@ -1,607 +1,722 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3rio – Creative Design</title>
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <!-- tsParticles -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-  <style>
-    :root {
-      --purple: #6E00FF;
-      --orange: #FF4500;
-      --white: #FFFFFF;
-      --black: #000000;
-      --ray-opacity: 0.2;
-      --transition: 0.3s ease;
-    }
-    
-    *, *::before, *::after { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-    }
-    
-    html { 
-      scroll-behavior: smooth; 
-    }
-    
-    body { 
-      font-family: 'Rubik', sans-serif; 
-      background: var(--black); 
-      color: var(--white); 
-      overflow-x: hidden; 
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3rio - Feel the Glow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/2.12.0/tsparticles.bundle.min.js"></script>
+    <style>
+        :root {
+            --electric-purple: #6E00FF;
+            --chromic-orange: #FF4500;
+            --black: #000000;
+            --white: #FFFFFF;
+            --ray-opacity: 0.3;
+        }
 
-    /* Header */
-    header { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      padding: 1rem 2rem; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      background: rgba(0,0,0,0.6); 
-      backdrop-filter: blur(6px); 
-      z-index: 1000; 
-    }
-    
-    .logo { 
-      height: 48px; 
-      transition: transform var(--transition); 
-      cursor: pointer;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--purple);
-    }
-    
-    .logo:hover { 
-      transform: scale(1.2); 
-    }
-    
-    nav ul { 
-      display: flex; 
-      gap: 1.5rem; 
-      list-style: none; 
-    }
-    
-    nav li { 
-      cursor: pointer; 
-      font-weight: 500; 
-      transition: color var(--transition); 
-    }
-    
-    nav li:hover { 
-      color: var(--orange); 
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Hero Section */
-    #hero { 
-      position: relative; 
-      height: 100vh; 
-      background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%);
-      overflow: hidden; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    #tsparticles { 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      z-index: 0; 
-    }
-    
-    .light-rays { 
-      position: absolute; 
-      top: -20%; 
-      left: -20%; 
-      width: 140%; 
-      height: 140%; 
-      background: 
-        radial-gradient(circle at 30% 30%, rgba(110,0,255,var(--ray-opacity)), transparent 60%), 
-        radial-gradient(circle at 70% 70%, rgba(255,69,0,var(--ray-opacity)), transparent 60%); 
-      pointer-events: none; 
-      z-index: 0; 
-      mix-blend-mode: screen; 
-      animation: rotateRays 20s linear infinite; 
-    }
-    
-    @keyframes rotateRays { 
-      from { transform: rotate(0deg); } 
-      to { transform: rotate(360deg); } 
-    }
-    
-    .hero-content { 
-      position: relative; 
-      z-index: 1; 
-      text-align: center; 
-      padding: 1rem; 
-      max-width: 700px; 
-      margin: 0 auto; 
-    }
-    
-    .hero-content h1 { 
-      font-size: clamp(2rem, 5vw, 3rem); 
-      letter-spacing: 1px; 
-      text-shadow: 0 0 8px var(--orange); 
-      animation: neonPulse 2s infinite; 
-      margin-bottom: 1rem; 
-    }
-    
-    @keyframes neonPulse { 
-      0%, 100% { text-shadow: 0 0 8px var(--orange); } 
-      50% { text-shadow: 0 0 20px var(--orange); } 
-    }
-    
-    .hero-content p { 
-      font-size: 1rem; 
-      margin-bottom: 1.5rem; 
-      white-space: pre-wrap; 
-      opacity: 0; 
-      transition: opacity var(--transition); 
-    }
-    
-    .btn { 
-      display: inline-block; 
-      padding: 0.75rem 1.5rem; 
-      background: var(--purple); 
-      color: var(--white); 
-      border-radius: 30px; 
-      transition: background var(--transition), transform var(--transition); 
-      text-decoration: none; 
-      border: none;
-      cursor: pointer;
-    }
-    
-    .btn:hover { 
-      background: var(--orange); 
-      transform: translateY(-2px); 
-    }
+        body {
+            font-family: 'Rubik', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
 
-    /* Sections common */
-    section { 
-      padding: 6rem 2rem; 
-    }
-    
-    .container { 
-      max-width: 1100px; 
-      margin: 0 auto; 
-    }
-    
-    h2 { 
-      text-align: center; 
-      font-size: 2rem; 
-      margin-bottom: 2rem; 
-    }
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #1a0033 0%, #000000 50%, #330066 100%);
+        }
 
-    /* Inventory pop-up */
-    #inventory { 
-      opacity: 0; 
-      transform: scale(0.9); 
-      transition: opacity 0.6s ease, transform 0.6s ease; 
-    }
-    
-    #inventory.visible { 
-      opacity: 1; 
-      transform: scale(1); 
-    }
-    
-    .grid-3 { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-      gap: 2rem; 
-    }
-    
-    .card { 
-      background: #111; 
-      border-radius: 8px; 
-      overflow: hidden; 
-      transition: transform var(--transition), box-shadow var(--transition); 
-    }
-    
-    .card:hover { 
-      transform: translateY(-5px) scale(1.05); 
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
-    }
-    
-    .card img { 
-      width: 100%; 
-      display: block; 
-      height: 200px;
-      object-fit: cover;
-    }
-    
-    .card h3 { 
-      padding: 1rem; 
-      font-size: 1.1rem; 
-      text-align: center; 
-    }
+        #tsparticles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
 
-    /* Before & After Section */
-    .before-after { 
-      display: flex; 
-      flex-wrap: wrap; 
-      gap: 2rem; 
-    }
-    
-    .ba-item { 
-      flex: 1; 
-      aspect-ratio: 1; 
-      overflow: hidden; 
-      border-radius: 8px; 
-      position: relative; 
-      min-width: 250px;
-    }
-    
-    .ba-item img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-    }
-    
-    .ba-item::after { 
-      content: attr(data-label); 
-      position: absolute; 
-      top: 1rem; 
-      left: 1rem; 
-      background: var(--purple); 
-      color: var(--white); 
-      padding: 0.3rem 0.6rem; 
-      border-radius: 4px; 
-      font-size: 0.8rem; 
-    }
+        .light-rays {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, 
+                rgba(110, 0, 255, var(--ray-opacity)) 0%, 
+                transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 2;
+        }
 
-    /* Event Section */
-    .event { 
-      display: flex; 
-      flex-wrap: wrap; 
-      gap: 2rem; 
-      align-items: center; 
-    }
-    
-    .event img { 
-      flex: 1 1 300px; 
-      border-radius: 8px; 
-      max-width: 100%;
-      height: auto;
-    }
-    
-    .event .desc {
-      flex: 1 1 300px;
-    }
-    
-    .desc p { 
-      margin-bottom: 1rem; 
-    }
-    
-    .event .btn { 
-      padding: 1rem 2rem; 
-      font-size: 1.1rem; 
-    }
+        @keyframes rotate {
+            0% { transform: rotate(0deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1.2); }
+        }
 
-    /* Templates Carousel */
-    .templates { 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      overflow-x: auto; 
-      gap: 1.5rem; 
-      padding-bottom: 1rem; 
-      scroll-snap-type: x mandatory; 
-    }
-    
-    .templates img { 
-      scroll-snap-align: center; 
-      min-width: 240px; 
-      height: 240px; 
-      object-fit: cover; 
-      border-radius: 8px; 
-      transition: transform var(--transition); 
-    }
-    
-    .templates img:hover { 
-      transform: scale(1.1); 
-    }
-    
-    .templates::-webkit-scrollbar { 
-      display: none; 
-    }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            padding: 0 20px;
+        }
 
-    /* Offer Section */
-    .offer-banner { 
-      background: var(--purple); 
-      color: var(--white); 
-      text-align: center; 
-      padding: 2rem; 
-      border-radius: 8px; 
-    }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: neon-pulse 2s ease-in-out infinite alternate;
+        }
 
-    /* Footer */
-    footer { 
-      text-align: center; 
-      padding: 2rem; 
-      background: #111; 
-    }
-    
-    footer a { 
-      color: var(--purple); 
-      text-decoration: none;
-    }
-    
-    footer a:hover {
-      color: var(--orange);
-    }
+        @keyframes neon-pulse {
+            0% { 
+                filter: drop-shadow(0 0 10px var(--electric-purple));
+                opacity: 0.9;
+            }
+            100% { 
+                filter: drop-shadow(0 0 20px var(--electric-purple)) drop-shadow(0 0 30px var(--chromic-orange));
+                opacity: 1;
+            }
+        }
 
-    /* Mobile Responsiveness */
-    @media (max-width: 768px) { 
-      .before-after { 
-        flex-direction: column; 
-      }
-      
-      header {
-        padding: 1rem;
-      }
-      
-      nav ul {
-        gap: 0.8rem;
-        font-size: 0.9rem;
-      }
-      
-      .hero-content h1 {
-        font-size: 2rem;
-      }
-      
-      section {
-        padding: 4rem 1rem;
-      }
-      
-      .event {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-  </style>
+        .typewriter {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 3rem;
+            min-height: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            color: var(--white);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(110, 0, 255, 0.5);
+        }
+
+        /* Featured Creations */
+        .featured {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(110, 0, 255, 0.2);
+        }
+
+        .card.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(110, 0, 255, 0.3);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--electric-purple);
+        }
+
+        .card p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Before & After Showcase */
+        .showcase {
+            padding: 100px 20px;
+            background: rgba(110, 0, 255, 0.05);
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .showcase-panel {
+            aspect-ratio: 1;
+            background: linear-gradient(45deg, #333, #666);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .showcase-panel:hover {
+            transform: scale(1.02);
+        }
+
+        .panel-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .before-tag {
+            background: rgba(255, 69, 0, 0.9);
+            color: var(--white);
+        }
+
+        .after-tag {
+            background: rgba(110, 0, 255, 0.9);
+            color: var(--white);
+        }
+
+        /* Free Friday Giveaway */
+        .giveaway {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .giveaway-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .giveaway-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .giveaway-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--electric-purple);
+        }
+
+        .giveaway-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .join-button {
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            color: var(--white);
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .join-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Instagram Templates Gallery */
+        .templates {
+            padding: 100px 20px;
+            background: rgba(255, 69, 0, 0.05);
+        }
+
+        .carousel-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 20px 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .template-item {
+            flex: 0 0 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #333, #666);
+            border-radius: 15px;
+            scroll-snap-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+
+        .template-item:hover {
+            transform: scale(1.1);
+        }
+
+        /* Special Offer Banner */
+        .offer {
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .offer h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .offer p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .book-button {
+            background: var(--white);
+            color: var(--electric-purple);
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .book-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--electric-purple);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--chromic-orange);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .typewriter {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .giveaway-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .showcase-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .template-item {
+                flex: 0 0 200px;
+                height: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="logo">3rio</div>
-    <nav>
-      <ul>
-        <li onclick="scrollToSection('hero')">Home</li>
-        <li onclick="scrollToSection('inventory')">Work</li>
-        <li onclick="scrollToSection('portfolio')">Before/After</li>
-        <li onclick="scrollToSection('event')">Event</li>
-        <li onclick="scrollToSection('templates')">Templates</li>
-        <li onclick="scrollToSection('offer')">Offer</li>
-        <li onclick="scrollToSection('contact')">Contact</li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section id="hero">
-    <div id="tsparticles"></div>
-    <div class="light-rays"></div>
-    <div class="hero-content">
-      <h1>Feel the glow – Powered by 3rio</h1>
-      <p id="subheading"></p>
-      <a href="#inventory" class="btn">Explore Work</a>
-    </div>
-  </section>
-
-  <!-- Inventory -->
-  <section id="inventory">
-    <div class="container">
-      <h2>Featured Creations</h2>
-      <div class="grid-3">
-        <div class="card">
-          <img src="assets/inventory1.jpg" alt="Thumbnail Magic" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
-          <h3>Thumbnail Magic</h3>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div id="tsparticles"></div>
+        <div class="light-rays"></div>
+        <div class="hero-content">
+            <h1>Feel the glow – Powered by 3rio</h1>
+            <div class="typewriter" id="typewriter"></div>
+            <a href="#featured" class="cta-button">Explore Work</a>
         </div>
-        <div class="card">
-          <img src="assets/inventory2.jpg" alt="Logo Craft" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkY0NTAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
-          <h3>Logo Craft</h3>
-        </div>
-        <div class="card">
-          <img src="assets/inventory3.jpg" alt="Template Suite" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
-          <h3>Template Suite</h3>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Before & After -->
-  <section id="portfolio">
-    <div class="container">
-      <h2>Before & After Transformations</h2>
-      <div class="before-after">
-        <div class="ba-item" data-label="Before">
-          <img src="assets/before1.jpg" alt="Before transformation" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJlZm9yZTwvdGV4dD48L3N2Zz4='">
+    <!-- Featured Creations -->
+    <section class="featured" id="featured">
+        <h2 class="section-title">Featured Creations</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-image">🎨</div>
+                <h3>Logo Design</h3>
+                <p>Stunning brand identities that make you stand out</p>
+            </div>
+            <div class="card">
+                <div class="card-image">📱</div>
+                <h3>Social Media</h3>
+                <p>Eye-catching posts that drive engagement</p>
+            </div>
+            <div class="card">
+                <div class="card-image">🍽️</div>
+                <h3>Menu Design</h3>
+                <p>Delicious layouts that boost sales</p>
+            </div>
+            <div class="card">
+                <div class="card-image">🎭</div>
+                <h3>Brand Identity</h3>
+                <p>Complete visual systems that tell your story</p>
+            </div>
+            <div class="card">
+                <div class="card-image">💼</div>
+                <h3>Business Cards</h3>
+                <p>Professional designs that leave lasting impressions</p>
+            </div>
+            <div class="card">
+                <div class="card-image">🌐</div>
+                <h3>Web Graphics</h3>
+                <p>Digital assets that enhance user experience</p>
+            </div>
         </div>
-        <div class="ba-item" data-label="After">
-          <img src="assets/after1.jpg" alt="After transformation" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFmdGVyPC90ZXh0Pjwvc3ZnPg=='">
+    </section>
+
+    <!-- Before & After Showcase -->
+    <section class="showcase">
+        <h2 class="section-title">Before & After Showcase</h2>
+        <div class="showcase-grid">
+            <div class="showcase-panel">
+                <div class="panel-tag before-tag">Before</div>
+                <span>Original Design</span>
+            </div>
+            <div class="showcase-panel">
+                <div class="panel-tag after-tag">After</div>
+                <span>3rio Transformation</span>
+            </div>
+            <div class="showcase-panel">
+                <div class="panel-tag before-tag">Before</div>
+                <span>Basic Layout</span>
+            </div>
+            <div class="showcase-panel">
+                <div class="panel-tag after-tag">After</div>
+                <span>Premium Redesign</span>
+            </div>
         </div>
-        <div class="ba-item" data-label="Before">
-          <img src="assets/before2.jpg" alt="Before transformation" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJlZm9yZTwvdGV4dD48L3N2Zz4='">
+    </section>
+
+    <!-- Free Friday Giveaway -->
+    <section class="giveaway">
+        <h2 class="section-title">Free Friday Giveaway</h2>
+        <div class="giveaway-content">
+            <div class="giveaway-image">
+                🎡 Spin & Win
+            </div>
+            <div class="giveaway-text">
+                <h2>Weekly Design Giveaway!</h2>
+                <p>Every Friday, we give away premium design services absolutely free. Join our community and get a chance to win logo design, social media templates, or complete brand packages!</p>
+                <a href="#" class="join-button">Join Now</a>
+            </div>
         </div>
-        <div class="ba-item" data-label="After">
-          <img src="assets/after2.jpg" alt="After transformation" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFmdGVyPC90ZXh0Pjwvc3ZnPg=='">
+    </section>
+
+    <!-- Instagram Templates Gallery -->
+    <section class="templates">
+        <h2 class="section-title">Instagram Templates</h2>
+        <div class="carousel-container">
+            <div class="carousel">
+                <div class="template-item">Story Template 1</div>
+                <div class="template-item">Post Design 1</div>
+                <div class="template-item">Reel Cover 1</div>
+                <div class="template-item">Story Template 2</div>
+                <div class="template-item">Post Design 2</div>
+                <div class="template-item">Reel Cover 2</div>
+                <div class="template-item">Story Template 3</div>
+                <div class="template-item">Post Design 3</div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Event -->
-  <section id="event">
-    <div class="container">
-      <h2>Free Friday Giveaway</h2>
-      <div class="event">
-        <img src="assets/event.jpg" alt="Free Friday Giveaway" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSI1MCUiIGZpbGw9IiNGRjQ1MDAiLz48cmVjdCB5PSI1MCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjUwJSIgZmlsbD0iIzZFMDBGRiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FdmVudDwvdGV4dD48L3N2Zz4='">
-        <div class="desc">
-          <p>Be among the first 10 to comment on our Instagram & win a free design pack!</p>
-          <a href="https://instagram.com/3riokw" class="btn" target="_blank" rel="noopener noreferrer">Join Now</a>
+    <!-- Special Offer Banner -->
+    <section class="offer">
+        <h2>Limited Time Offer</h2>
+        <p>Get premium logo design + social media kit for just $199 (reg. $399)</p>
+        <a href="mailto:hello@3rio.design?subject=Special Offer Inquiry" class="book-button">Book Yours</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://instagram.com/3rio.design" target="_blank">@3rio.design</a>
+            <a href="mailto:hello@3rio.design">hello@3rio.design</a>
         </div>
-      </div>
-    </div>
-  </section>
+        <p>&copy; 2025 3rio. All rights reserved.</p>
+    </footer>
 
-  <!-- Templates -->
-  <section id="templates">
-    <div class="container">
-      <h2>Instagram Templates Gallery</h2>
-      <div class="templates">
-        <img src="assets/template1.jpg" alt="Template 1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRlbXBsYXRlIDE8L3RleHQ+PC9zdmc+'">
-        <img src="assets/template2.jpg" alt="Template 2" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkY0NTAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRlbXBsYXRlIDI8L3RleHQ+PC9zdmc+'">
-        <img src="assets/template3.jpg" alt="Template 3" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRlbXBsYXRlIDM8L3RleHQ+PC9zdmc+'">
-        <img src="assets/template4.jpg" alt="Template 4" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkY0NTAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRlbXBsYXRlIDQ8L3RleHQ+PC9zdmc+'">
-      </div>
-    </div>
-  </section>
-
-  <!-- Offer -->
-  <section id="offer">
-    <div class="container">
-      <div class="offer-banner">
-        <h2>Special Thumbnail Package</h2>
-        <p>5.900 KWD – 2–3 day delivery. Limited availability.</p>
-        <br>
-        <a href="mailto:3riokw@gmail.com" class="btn">Book Yours</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer id="contact">
-    <p>Follow: <a href="https://instagram.com/3riokw" target="_blank" rel="noopener noreferrer">@3riokw</a></p>
-    <p>Email: <a href="mailto:3riokw@gmail.com">3riokw@gmail.com</a></p>
-  </footer>
-
-  <script>
-    // Smooth scroll function
-    function scrollToSection(sectionId) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    // tsParticles initialization with error handling
-    function initParticles() {
-      if (typeof tsParticles !== 'undefined') {
-        tsParticles.load('tsparticles', {
-          particles: { 
-            number: { value: 60 }, 
-            size: { value: 3 }, 
-            move: { enable: true, speed: 0.5 },
-            color: { value: ["#6E00FF", "#FF4500"] },
-            opacity: { value: 0.7 }
-          },
-          interactivity: { 
-            events: { 
-              onhover: { enable: true, mode: 'repulse' } 
-            } 
-          }
-        }).catch(function(error) {
-          console.log('Particles could not load:', error);
+    <script>
+        // Initialize particles
+        tsParticles.load("tsparticles", {
+            background: {
+                color: "transparent"
+            },
+            fpsLimit: 60,
+            particles: {
+                color: {
+                    value: ["#6E00FF", "#FF4500"]
+                },
+                links: {
+                    color: "#6E00FF",
+                    distance: 150,
+                    enable: true,
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    direction: "none",
+                    enable: true,
+                    outModes: {
+                        default: "bounce"
+                    },
+                    random: false,
+                    speed: 1,
+                    straight: false
+                },
+                number: {
+                    density: {
+                        enable: true,
+                        area: 800
+                    },
+                    value: 80
+                },
+                opacity: {
+                    value: 0.3
+                },
+                shape: {
+                    type: "circle"
+                },
+                size: {
+                    value: { min: 1, max: 3 }
+                }
+            },
+            detectRetina: true
         });
-      }
-    }
 
-    // Typewriter effect with error handling
-    function startTypewriter() {
-      const text = "From logos to menus, we bring the wow to your workflow";
-      const sub = document.getElementById('subheading');
-      let idx = 0;
-      
-      function type() {
-        if (!sub) return;
-        sub.style.opacity = 1;
-        if (idx < text.length) {
-          sub.textContent += text[// Smooth scroll function
-    function scrollToSection(sectionId) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+        // Typewriter effect
+        const typewriterText = "From logos to menus, we bring the wow to your workflow";
+        const typewriterElement = document.getElementById('typewriter');
+        let i = 0;
 
-    // tsParticles initialization with error handling
-    function initParticles() {
-      if (typeof tsParticles !== 'undefined') {
-        tsParticles.load('tsparticles', {
-          particles: {
-            number: { value: 60 },
-            size:   { value: 3  },
-            move:   { enable: true, speed: 0.5 },
-            color:  { value: ['#6E00FF','#FF4500'] },
-            opacity:{ value: 0.7 }
-          },
-          interactivity: {
-            events: { onhover: { enable: true, mode: 'repulse' } }
-          }
-        }).catch(error => {
-          console.log('Particles could not load:', error);
-        });
-      }
-    }
-
-    // Typewriter effect with error handling
-    function startTypewriter() {
-      const text = "From logos to menus, we bring the wow to your workflow";
-      const sub  = document.getElementById('subheading');
-      let idx = 0;
-
-      function type() {
-        if (!sub) return;
-        sub.style.opacity = 1;
-        if (idx < text.length) {
-          sub.textContent += text[idx++];
-          // play click
-          const click = new Audio('assets/typewriter.mp3');
-          click.volume = 0.2;
-          click.play().catch(() => {});
-          // schedule next char
-          setTimeout(type, 80);
+        function typeWriter() {
+            if (i < typewriterText.length) {
+                typewriterElement.innerHTML += typewriterText.charAt(i);
+                // Play click sound (simulated with a subtle audio context)
+                playClickSound();
+                i++;
+                setTimeout(typeWriter, 100);
+            }
         }
-      }
 
-      // kick it off
-      type();
-    }
+        function playClickSound() {
+            // Create a simple click sound using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
 
-    // Light‐rays visualizer driven by mic input
-    function startRayVisualizer() {
-      if (!navigator.mediaDevices || !window.AudioContext) return;
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          const src      = audioCtx.createMediaStreamSource(stream);
-          const analyser = audioCtx.createAnalyser();
-          analyser.fftSize = 128;
-          src.connect(analyser);
-          const data = new Uint8Array(analyser.frequencyBinCount);
+        // Start typewriter effect after page load
+        setTimeout(typeWriter, 1000);
 
-          (function animateRays() {
-            requestAnimationFrame(animateRays);
-            analyser.getByteFrequencyData(data);
-            const avg = data.reduce((sum, v) => sum + v, 0) / data.length / 255;
-            document.documentElement.style.setProperty('--ray-opacity', 0.1 + avg * 0.5);
-          })();
-        })
-        .catch(err => console.warn('Could not start microphone visualizer:', err));
-    }
+        // Microphone input for light rays (optional feature)
+        async function initMicrophoneInput() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = audioContext.createAnalyser();
+                const microphone = audioContext.createMediaStreamSource(stream);
+                
+                microphone.connect(analyser);
+                analyser.fftSize = 256;
+                
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                
+                function updateRayOpacity() {
+                    analyser.getByteFrequencyData(dataArray);
+                    const average = dataArray.reduce((a, b) => a + b) / bufferLength;
+                    const opacity = Math.min(0.8, average / 128);
+                    document.documentElement.style.setProperty('--ray-opacity', opacity);
+                    requestAnimationFrame(updateRayOpacity);
+                }
+                
+                updateRayOpacity();
+            } catch (err) {
+                console.log('Microphone access denied or not available');
+            }
+        }
 
-    // Initialize everything once DOM is ready
-    window.addEventListener('DOMContentLoaded', () => {
-      initParticles();
-      startTypewriter();
-      startRayVisualizer();
-    });    
+        // Initialize microphone input (user must interact first)
+        document.addEventListener('click', initMicrophoneInput, { once: true });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all cards
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelector('.cta-button').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelector('#featured').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Add hover sound effects
+        document.querySelectorAll('.card, .cta-button, .join-button, .book-button').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                // Subtle hover sound
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(1200, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+            });
+        });
+    </script>
+</body>
+</html>
