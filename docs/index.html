@@ -28,7 +28,10 @@
       display: flex; justify-content: space-between; align-items: center;
       background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 1000;
     }
-    header img { height: 48px; }
+    header img {
+      height: 48px; transition: transform var(--transition);
+    }
+    header img:hover { transform: scale(1.2); }
     nav ul { display: flex; gap: 1.5rem; list-style: none; }
     nav li { cursor: pointer; font-weight: 500; transition: color var(--transition); }
     nav li:hover { color: var(--orange); }
@@ -39,6 +42,26 @@
       background: url('assets/cover.jpg') center/cover no-repeat;
     }
     #tsparticles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+    .light-rays, .northern-lights {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .light-rays {
+      background: radial-gradient(circle at 30% 30%, rgba(110,0,255,0.2), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(255,69,0,0.2), transparent 60%);
+      animation: rotateRays 20s linear infinite;
+    }
+    .northern-lights {
+      background: linear-gradient(120deg, rgba(110,0,255,0.15), transparent),
+                  linear-gradient(60deg, rgba(110,0,255,0.15), transparent);
+      mix-blend-mode: screen;
+      opacity: 0;
+      animation: fadeInLights 5s ease forwards;
+      animation-delay: 1s;
+    }
+    @keyframes rotateRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes fadeInLights { to { opacity: 1; } }
+
     .hero-content {
       position: relative; z-index: 1; text-align: center;
       padding: 1rem; max-width: 700px; margin: 0 auto;
@@ -50,13 +73,11 @@
       animation: neonPulse 2s infinite;
       margin-bottom: 1rem;
     }
-    @keyframes neonPulse {
-      0%, 100% { text-shadow: 0 0 8px var(--orange); }
-      50%     { text-shadow: 0 0 20px var(--orange); }
-    }
+    @keyframes neonPulse { 0%,100% { text-shadow: 0 0 8px var(--orange); } 50% { text-shadow: 0 0 20px var(--orange); } }
     .hero-content p {
       font-size: 1rem; margin-bottom: 1.5rem;
       white-space: pre-wrap; opacity: 0;
+      transition: opacity var(--transition);
     }
     .btn {
       display: inline-block; padding: 0.75rem 1.5rem;
@@ -66,22 +87,15 @@
     }
     .btn:hover { background: var(--orange); transform: translateY(-2px); }
 
-    /* Purple Light Rays Overlay */
-    .light-rays {
-      position: absolute; top: -25%; left: -25%; width: 150%; height: 150%;
-      background: radial-gradient(circle at 30% 30%, rgba(110,0,255,0.2), transparent 60%),
-                  radial-gradient(circle at 70% 70%, rgba(255,69,0,0.2), transparent 60%);
-      pointer-events: none; z-index: 0;
-      animation: rotateRays 20s linear infinite;
-    }
-    @keyframes rotateRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-    /* Section Layouts */
+    /* Sections */
     section { padding: 6rem 2rem; position: relative; }
     .container { max-width: 1100px; margin: 0 auto; }
     h2 { text-align: center; font-size: 2rem; margin-bottom: 2rem; }
 
-    /* Featured Work Grid */
+    /* Inventory Section: pop-up effect */
+    #inventory { opacity: 0; transform: scale(0.9); transition: opacity 0.6s ease, transform 0.6s ease; }
+    #inventory.visible { opacity: 1; transform: scale(1); }
+
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -91,21 +105,17 @@
       background: #111; border-radius: 8px; overflow: hidden;
       transition: transform var(--transition), box-shadow var(--transition);
     }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+    .card:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
     .card img { width: 100%; display: block; }
-    .card h3 { padding: 1rem; font-size: 1.1rem; }
+    .card h3 { padding: 1rem; font-size: 1.1rem; text-align: center; }
 
-    /* Before & After Equal Height */
-    .before-after {
-      display: flex; flex-wrap: wrap; gap: 2rem; align-items: stretch;
-    }
+    /* Before & After Section: square aspect ratio */
+    .before-after { display: flex; flex-wrap: wrap; gap: 2rem; }
     .ba-item {
-      flex: 1; position: relative; height: 400px; overflow: hidden;
-      border-radius: 8px;
+      flex: 1; position: relative; aspect-ratio: 1/1;
+      overflow: hidden; border-radius: 8px;
     }
-    .ba-item img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
+    .ba-item img { width: 100%; height: 100%; object-fit: cover; }
     .ba-item::after {
       content: attr(data-label); position: absolute; top: 1rem; left: 1rem;
       background: var(--purple); color: var(--white);
@@ -114,21 +124,23 @@
     }
 
     /* Event Section */
-    .event {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;
-    }
+    .event { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; }
     .event img { flex: 1 1 300px; border-radius: 8px; }
     .desc p { margin-bottom: 1rem; }
+    .event .btn { padding: 1rem 2rem; font-size: 1rem; }
 
     /* Templates Carousel */
     .templates {
-      display: flex; overflow-x: auto; gap: 1.5rem; padding-bottom: 1rem;
+      display: flex; justify-content: center; align-items: center;
+      overflow-x: auto; gap: 1.5rem; padding-bottom: 1rem;
       scroll-snap-type: x mandatory;
     }
     .templates img {
-      scroll-snap-align: start; min-width: 200px; height: 200px;
+      scroll-snap-align: center; min-width: 240px; height: 240px;
       object-fit: cover; border-radius: 8px;
+      transition: transform var(--transition);
     }
+    .templates img:hover { transform: scale(1.1); }
     .templates::-webkit-scrollbar { display: none; }
 
     /* Offer Banner */
@@ -170,6 +182,7 @@
   <section id="hero">
     <div id="tsparticles"></div>
     <div class="light-rays"></div>
+    <div class="northern-lights"></div>
     <canvas id="visualizer"></canvas>
     <div class="hero-content">
       <h1>Feel the glow – Powered by 3rio</h1>
@@ -193,9 +206,12 @@
   <!-- Before & After -->
   <section id="portfolio">
     <div class="container">
-      <h2>Before & After Transformations</n      <div class="before-after">
+      <h2>Before & After Transformations</h2>
+      <div class="before-after">
         <div class="ba-item" data-label="Before"><img src="assets/before1.jpg" alt=""></div>
         <div class="ba-item" data-label="After"><img src="assets/after1.jpg" alt=""></div>
+        <div class="ba-item" data-label="Before"><img src="assets/before2.jpg" alt=""></div>
+        <div class="ba-item" data-label="After"><img src="assets/after2.jpg" alt=""></div>
       </div>
     </div>
   </section>
@@ -263,6 +279,14 @@
     }
     window.addEventListener('load', () => setTimeout(type, 500));
 
+    // Inventory pop-up effect observer
+    const inv = document.getElementById('inventory');
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) inv.classList.add('visible');
+      });
+    }, { threshold: 0.3 }).observe(inv);
+
     // Audio visualizer from mic
     const canvas = document.getElementById('visualizer');
     const ctx = canvas.getContext('2d');
@@ -271,8 +295,7 @@
         .then(stream => {
           const audioCtx = new AudioContext();
           const src = audioCtx.createMediaStreamSource(stream);
-          const analyser = audioCtx.createAnalyser();
-          analyser.fftSize = 256;
+          const analyser = audioCtx.createAnalyser(); analyser.fftSize = 256;
           src.connect(analyser);
           const bufferLength = analyser.frequencyBinCount;
           const dataArray = new Uint8Array(bufferLength);
@@ -288,14 +311,11 @@
             });
           }
           draw();
-        })
-        .catch(console.error);
+        }).catch(console.error);
     }
-    // Resize canvas to fit
     function resizeCanvas() { canvas.width = window.innerWidth * 0.8; canvas.height = 100; }
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    initVisualizer();
+    resizeCanvas(); initVisualizer();
 
     function scrollTo(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
   </script>
