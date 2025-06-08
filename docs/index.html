@@ -50,13 +50,16 @@
       z-index: 1000; 
     }
     
-    header img { 
+    .logo { 
       height: 48px; 
       transition: transform var(--transition); 
-      cursor: pointer; 
+      cursor: pointer;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--purple);
     }
     
-    header img:hover { 
+    .logo:hover { 
       transform: scale(1.2); 
     }
     
@@ -80,7 +83,7 @@
     #hero { 
       position: relative; 
       height: 100vh; 
-      background: url('assets/cover.jpg') center/cover no-repeat; 
+      background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%);
       overflow: hidden; 
       display: flex;
       align-items: center;
@@ -369,16 +372,16 @@
 </head>
 <body>
   <header>
-    <img src="assets/logo.png" alt="3rio logo" onerror="this.style.display='none'">
+    <div class="logo">3rio</div>
     <nav>
       <ul>
-        <li onclick="scrollTo('hero')">Home</li>
-        <li onclick="scrollTo('inventory')">Work</li>
-        <li onclick="scrollTo('portfolio')">Before/After</li>
-        <li onclick="scrollTo('event')">Event</li>
-        <li onclick="scrollTo('templates')">Templates</li>
-        <li onclick="scrollTo('offer')">Offer</li>
-        <li onclick="scrollTo('contact')">Contact</li>
+        <li onclick="scrollToSection('hero')">Home</li>
+        <li onclick="scrollToSection('inventory')">Work</li>
+        <li onclick="scrollToSection('portfolio')">Before/After</li>
+        <li onclick="scrollToSection('event')">Event</li>
+        <li onclick="scrollToSection('templates')">Templates</li>
+        <li onclick="scrollToSection('offer')">Offer</li>
+        <li onclick="scrollToSection('contact')">Contact</li>
       </ul>
     </nav>
   </header>
@@ -400,15 +403,15 @@
       <h2>Featured Creations</h2>
       <div class="grid-3">
         <div class="card">
-          <img src="assets/inventory1.jpg" alt="Thumbnail Magic" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+          <img src="assets/inventory1.jpg" alt="Thumbnail Magic" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
           <h3>Thumbnail Magic</h3>
         </div>
         <div class="card">
-          <img src="assets/inventory2.jpg" alt="Logo Craft" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+          <img src="assets/inventory2.jpg" alt="Logo Craft" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkY0NTAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
           <h3>Logo Craft</h3>
         </div>
         <div class="card">
-          <img src="assets/inventory3.jpg" alt="Template Suite" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+          <img src="assets/inventory3.jpg" alt="Template Suite" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNkUwMEZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
           <h3>Template Suite</h3>
         </div>
       </div>
@@ -482,47 +485,123 @@
   </footer>
 
   <script>
+    // Smooth scroll function
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
     // tsParticles initialization with error handling
-    if (typeof tsParticles !== 'undefined') {
-      tsParticles.load('tsparticles', {
-        particles: { 
-          number: { value: 60 }, 
-          size: { value: 3 }, 
-          move: { enable: true, speed: 0.5 },
-          color: { value: ["#6E00FF", "#FF4500"] },
-          opacity: { value: 0.7 }
-        },
-        interactivity: { 
-          events: { 
-            onhover: { enable: true, mode: 'repulse' } 
-          } 
-        }
-      }).catch(console.error);
+    function initParticles() {
+      if (typeof tsParticles !== 'undefined') {
+        tsParticles.load('tsparticles', {
+          particles: { 
+            number: { value: 60 }, 
+            size: { value: 3 }, 
+            move: { enable: true, speed: 0.5 },
+            color: { value: ["#6E00FF", "#FF4500"] },
+            opacity: { value: 0.7 }
+          },
+          interactivity: { 
+            events: { 
+              onhover: { enable: true, mode: 'repulse' } 
+            } 
+          }
+        }).catch(function(error) {
+          console.log('Particles could not load:', error);
+        });
+      }
     }
 
     // Typewriter effect with error handling
-    const text = "From logos to menus, we bring the wow to your workflow";
-    const sub = document.getElementById('subheading');
-    let idx = 0;
-    
-    function type() {
-      if (!sub) return;
-      sub.style.opacity = 1;
-      if (idx < text.length) {
-        sub.textContent += text[idx++];
-        
-        // Optional typewriter sound (won't break if file doesn't exist)
-        try {
-          const click = new Audio('assets/typewriter.mp3');
-          click.volume = 0.2;
-          click.play().catch(() => {}); // Silently fail if audio can't play
-        } catch (e) {
-          // Audio file doesn't exist or can't load - that's okay
-        }
-        
-        setTimeout(type, 80);
+    function startTypewriter() {
+      const text = "From logos to menus, we bring the wow to your workflow";
+      const sub = document.getElementById('subheading');
+      let idx = 0;
+      
+      function type() {
+        if (!sub) return;
+        sub.style.opacity = 1;
+        if (idx < text.length) {
+          sub.textContent += text[// Smooth scroll function
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       }
     }
-    
-    // Start typewriter effect after page loads
-    window
+
+    // tsParticles initialization with error handling
+    function initParticles() {
+      if (typeof tsParticles !== 'undefined') {
+        tsParticles.load('tsparticles', {
+          particles: {
+            number: { value: 60 },
+            size:   { value: 3  },
+            move:   { enable: true, speed: 0.5 },
+            color:  { value: ['#6E00FF','#FF4500'] },
+            opacity:{ value: 0.7 }
+          },
+          interactivity: {
+            events: { onhover: { enable: true, mode: 'repulse' } }
+          }
+        }).catch(error => {
+          console.log('Particles could not load:', error);
+        });
+      }
+    }
+
+    // Typewriter effect with error handling
+    function startTypewriter() {
+      const text = "From logos to menus, we bring the wow to your workflow";
+      const sub  = document.getElementById('subheading');
+      let idx = 0;
+
+      function type() {
+        if (!sub) return;
+        sub.style.opacity = 1;
+        if (idx < text.length) {
+          sub.textContent += text[idx++];
+          // play click
+          const click = new Audio('assets/typewriter.mp3');
+          click.volume = 0.2;
+          click.play().catch(() => {});
+          // schedule next char
+          setTimeout(type, 80);
+        }
+      }
+
+      // kick it off
+      type();
+    }
+
+    // Light‐rays visualizer driven by mic input
+    function startRayVisualizer() {
+      if (!navigator.mediaDevices || !window.AudioContext) return;
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const src      = audioCtx.createMediaStreamSource(stream);
+          const analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 128;
+          src.connect(analyser);
+          const data = new Uint8Array(analyser.frequencyBinCount);
+
+          (function animateRays() {
+            requestAnimationFrame(animateRays);
+            analyser.getByteFrequencyData(data);
+            const avg = data.reduce((sum, v) => sum + v, 0) / data.length / 255;
+            document.documentElement.style.setProperty('--ray-opacity', 0.1 + avg * 0.5);
+          })();
+        })
+        .catch(err => console.warn('Could not start microphone visualizer:', err));
+    }
+
+    // Initialize everything once DOM is ready
+    window.addEventListener('DOMContentLoaded', () => {
+      initParticles();
+      startTypewriter();
+      startRayVisualizer();
+    });    
