@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3rio - Feel the Glow</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/2.12.0/tsparticles.bundle.min.js"></script>
     <style>
         :root {
@@ -12,6 +12,8 @@
             --chromic-orange: #FF4500;
             --black: #000000;
             --white: #FFFFFF;
+            --gray: #333333;
+            --light-gray: #666666;
             --ray-opacity: 0.3;
         }
 
@@ -22,10 +24,93 @@
         }
 
         body {
-            font-family: 'Rubik', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             background: var(--black);
             color: var(--white);
             overflow-x: hidden;
+            cursor: none;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+        }
+
+        /* Fixed Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 40px;
+            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--electric-purple);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
         }
 
         /* Hero Section */
@@ -70,12 +155,12 @@
         .hero-content {
             position: relative;
             z-index: 3;
-            max-width: 800px;
-            padding: 0 20px;
+            max-width: 900px;
+            padding: 0 40px;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: 700;
             margin-bottom: 2rem;
             background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
@@ -83,6 +168,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: neon-pulse 2s ease-in-out infinite alternate;
+            line-height: 1.2;
         }
 
         @keyframes neon-pulse {
@@ -96,6 +182,16 @@
             }
         }
 
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .typewriter {
             font-size: 1.5rem;
             font-weight: 400;
@@ -104,506 +200,635 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        .cta-button {
-            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
-            color: var(--white);
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            animation: bounce 2s infinite;
         }
 
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(110, 0, 255, 0.5);
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
         }
 
-        /* Featured Creations */
-        .featured {
-            padding: 100px 20px;
-            max-width: 1200px;
+        /* Section Styles */
+        .section {
+            padding: 120px 40px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .section-title {
+        .section-header {
             text-align: center;
-            font-size: 3rem;
+            margin-bottom: 80px;
+        }
+
+        .section-number {
+            font-size: 1rem;
+            color: var(--electric-purple);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 4rem;
+            margin-bottom: 20px;
             background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1.2;
         }
 
-        .grid {
+        .section-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Featured Work */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .work-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            background: var(--gray);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .work-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .work-item:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .work-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .work-item:hover::before {
+            opacity: 0.1;
+        }
+
+        .work-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        }
+
+        .work-category {
+            font-size: 0.9rem;
+            color: var(--chromic-orange);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .work-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .work-description {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+
+        /* Process Section */
+        .process-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 40px;
+            margin-top: 60px;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
+        .process-step {
             text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(110, 0, 255, 0.1);
             transition: all 0.3s ease;
             opacity: 0;
-            transform: scale(0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(110, 0, 255, 0.2);
+            transform: translateY(30px);
         }
 
-        .card.animate {
+        .process-step.animate {
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0);
         }
 
-        .card:hover {
-            transform: scale(1.05) translateY(-10px);
-            box-shadow: 0 20px 40px rgba(110, 0, 255, 0.3);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
-            border-radius: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--white);
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--electric-purple);
-        }
-
-        .card p {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Before & After Showcase */
-        .showcase {
-            padding: 100px 20px;
+        .process-step:hover {
             background: rgba(110, 0, 255, 0.05);
+            border-color: var(--electric-purple);
+            transform: translateY(-5px);
         }
 
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .showcase-panel {
-            aspect-ratio: 1;
-            background: linear-gradient(45deg, #333, #666);
-            border-radius: 15px;
-            position: relative;
-            overflow: hidden;
+        .process-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
         }
 
-        .showcase-panel:hover {
-            transform: scale(1.02);
-        }
-
-        .panel-tag {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .before-tag {
-            background: rgba(255, 69, 0, 0.9);
-            color: var(--white);
-        }
-
-        .after-tag {
-            background: rgba(110, 0, 255, 0.9);
-            color: var(--white);
-        }
-
-        /* Free Friday Giveaway */
-        .giveaway {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .giveaway-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .giveaway-image {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--white);
-        }
-
-        .giveaway-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--electric-purple);
-        }
-
-        .giveaway-text p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .join-button {
-            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
-            color: var(--white);
-            padding: 20px 50px;
-            border: none;
-            border-radius: 50px;
+        .process-title {
             font-size: 1.3rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .join-button:hover {
-            transform: scale(1.05);
-        }
-
-        /* Instagram Templates Gallery */
-        .templates {
-            padding: 100px 20px;
-            background: rgba(255, 69, 0, 0.05);
-        }
-
-        .carousel-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .carousel {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding: 20px 0;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .carousel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .template-item {
-            flex: 0 0 250px;
-            height: 250px;
-            background: linear-gradient(45deg, #333, #666);
-            border-radius: 15px;
-            scroll-snap-align: center;
-            transition: transform 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
+            margin-bottom: 15px;
             color: var(--white);
         }
 
-        .template-item:hover {
-            transform: scale(1.1);
+        .process-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
         }
 
-        /* Special Offer Banner */
-        .offer {
-            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
-            padding: 80px 20px;
-            text-align: center;
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
         }
 
-        .offer h2 {
+        .service-card {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(110, 0, 255, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card:hover {
+            background: rgba(110, 0, 255, 0.05);
+            border-color: var(--electric-purple);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
             font-size: 3rem;
             margin-bottom: 20px;
         }
 
-        .offer p {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--electric-purple);
         }
 
-        .book-button {
-            background: var(--white);
+        .service-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .service-features {
+            list-style: none;
+        }
+
+        .service-features li {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .service-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--chromic-orange);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
             color: var(--electric-purple);
-            padding: 20px 50px;
-            border: none;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 50px;
-            font-size: 1.3rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(110, 0, 255, 0.2);
+        }
+
+        .contact-link:hover {
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            transform: translateX(10px);
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(110, 0, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--electric-purple);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--electric-purple);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
+            border: none;
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
         }
 
-        .book-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(110, 0, 255, 0.3);
         }
 
         /* Footer */
         .footer {
-            padding: 60px 20px;
             text-align: center;
+            padding: 60px 40px;
             background: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid rgba(110, 0, 255, 0.1);
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
-        }
-
-        .footer-links a {
-            color: var(--electric-purple);
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--chromic-orange);
+        .footer p {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            .nav {
+                padding: 15px 20px;
             }
 
-            .typewriter {
-                font-size: 1.2rem;
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .section {
+                padding: 80px 20px;
             }
 
             .section-title {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
-            .giveaway-content {
+            .work-grid {
                 grid-template-columns: 1fr;
-                text-align: center;
             }
 
-            .footer-links {
-                flex-direction: column;
-                gap: 20px;
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
 
-            .showcase-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .template-item {
-                flex: 0 0 200px;
-                height: 200px;
+            .process-container,
+            .services-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">3rio</div>
+            <ul class="nav-menu">
+                <li><a href="#work">Work</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero">
         <div id="tsparticles"></div>
         <div class="light-rays"></div>
         <div class="hero-content">
-            <h1>Feel the glow – Powered by 3rio</h1>
+            <h1>Feel the glow</h1>
+            <p class="hero-subtitle">Powered by 3rio</p>
             <div class="typewriter" id="typewriter"></div>
-            <a href="#featured" class="cta-button">Explore Work</a>
+        </div>
+        <div class="scroll-indicator">
+            <p>Scroll to explore</p>
         </div>
     </section>
 
-    <!-- Featured Creations -->
-    <section class="featured" id="featured">
-        <h2 class="section-title">Featured Creations</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="card-image">🎨</div>
-                <h3>Logo Design</h3>
-                <p>Stunning brand identities that make you stand out</p>
-            </div>
-            <div class="card">
-                <div class="card-image">📱</div>
-                <h3>Social Media</h3>
-                <p>Eye-catching posts that drive engagement</p>
-            </div>
-            <div class="card">
-                <div class="card-image">🍽️</div>
-                <h3>Menu Design</h3>
-                <p>Delicious layouts that boost sales</p>
-            </div>
-            <div class="card">
-                <div class="card-image">🎭</div>
-                <h3>Brand Identity</h3>
-                <p>Complete visual systems that tell your story</p>
-            </div>
-            <div class="card">
-                <div class="card-image">💼</div>
-                <h3>Business Cards</h3>
-                <p>Professional designs that leave lasting impressions</p>
-            </div>
-            <div class="card">
-                <div class="card-image">🌐</div>
-                <h3>Web Graphics</h3>
-                <p>Digital assets that enhance user experience</p>
-            </div>
+    <!-- Featured Work -->
+    <section class="section" id="work">
+        <div class="section-header">
+            <div class="section-number">01</div>
+            <h2 class="section-title">Featured Work</h2>
+            <p class="section-description">Explore our latest projects where creativity meets strategy to deliver exceptional brand experiences.</p>
         </div>
-    </section>
-
-    <!-- Before & After Showcase -->
-    <section class="showcase">
-        <h2 class="section-title">Before & After Showcase</h2>
-        <div class="showcase-grid">
-            <div class="showcase-panel">
-                <div class="panel-tag before-tag">Before</div>
-                <span>Original Design</span>
+        <div class="work-grid">
+            <div class="work-item">
+                <div class="work-content">
+                    <div class="work-category">Brand Identity</div>
+                    <h3 class="work-title">Luxe Restaurant Rebrand</h3>
+                    <p class="work-description">Complete visual identity transformation including logo, menu design, and digital presence.</p>
+                </div>
             </div>
-            <div class="showcase-panel">
-                <div class="panel-tag after-tag">After</div>
-                <span>3rio Transformation</span>
+            <div class="work-item">
+                <div class="work-content">
+                    <div class="work-category">Digital Campaign</div>
+                    <h3 class="work-title">Social Media Mastery</h3>
+                    <p class="work-description">Instagram templates and content strategy that increased engagement by 300%.</p>
+                </div>
             </div>
-            <div class="showcase-panel">
-                <div class="panel-tag before-tag">Before</div>
-                <span>Basic Layout</span>
+            <div class="work-item">
+                <div class="work-content">
+                    <div class="work-category">Package Design</div>
+                    <h3 class="work-title">Product Packaging Suite</h3>
+                    <p class="work-description">Award-winning packaging design that boosted shelf appeal and sales.</p>
+                </div>
             </div>
-            <div class="showcase-panel">
-                <div class="panel-tag after-tag">After</div>
-                <span>Premium Redesign</span>
+            <div class="work-item">
+                <div class="work-content">
+                    <div class="work-category">Web Experience</div>
+                    <h3 class="work-title">Interactive Portfolio</h3>
+                    <p class="work-description">Custom web design with immersive animations and user experience.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Free Friday Giveaway -->
-    <section class="giveaway">
-        <h2 class="section-title">Free Friday Giveaway</h2>
-        <div class="giveaway-content">
-            <div class="giveaway-image">
-                🎡 Spin & Win
+    <!-- Process -->
+    <section class="section" id="process">
+        <div class="section-header">
+            <div class="section-number">02</div>
+            <h2 class="section-title">Our Process</h2>
+            <p class="section-description">We follow a proven methodology to ensure every project delivers exceptional results.</p>
+        </div>
+        <div class="process-container">
+            <div class="process-step">
+                <div class="process-number">1</div>
+                <h3 class="process-title">Discovery</h3>
+                <p class="process-description">We dive deep into your brand, goals, and target audience to understand the foundation of your project.</p>
             </div>
-            <div class="giveaway-text">
-                <h2>Weekly Design Giveaway!</h2>
-                <p>Every Friday, we give away premium design services absolutely free. Join our community and get a chance to win logo design, social media templates, or complete brand packages!</p>
-                <a href="#" class="join-button">Join Now</a>
+            <div class="process-step">
+                <div class="process-number">2</div>
+                <h3 class="process-title">Strategy</h3>
+                <p class="process-description">Develop a comprehensive creative strategy that aligns with your business objectives and market positioning.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-number">3</div>
+                <h3 class="process-title">Design</h3>
+                <p class="process-description">Create stunning visuals that capture your brand essence and resonate with your audience.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-number">4</div>
+                <h3 class="process-title">Delivery</h3>
+                <p class="process-description">Provide all final assets with ongoing support to ensure successful implementation.</p>
             </div>
         </div>
     </section>
 
-    <!-- Instagram Templates Gallery -->
-    <section class="templates">
-        <h2 class="section-title">Instagram Templates</h2>
-        <div class="carousel-container">
-            <div class="carousel">
-                <div class="template-item">Story Template 1</div>
-                <div class="template-item">Post Design 1</div>
-                <div class="template-item">Reel Cover 1</div>
-                <div class="template-item">Story Template 2</div>
-                <div class="template-item">Post Design 2</div>
-                <div class="template-item">Reel Cover 2</div>
-                <div class="template-item">Story Template 3</div>
-                <div class="template-item">Post Design 3</div>
+    <!-- Services -->
+    <section class="section" id="services">
+        <div class="section-header">
+            <div class="section-number">03</div>
+            <h2 class="section-title">Services</h2>
+            <p class="section-description">From logos to comprehensive brand systems, we bring the wow to your workflow.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3 class="service-title">Brand Identity</h3>
+                <p class="service-description">Complete visual identity systems that tell your unique story.</p>
+                <ul class="service-features">
+                    <li>Logo Design & Variations</li>
+                    <li>Color Palette & Typography</li>
+                    <li>Brand Guidelines</li>
+                    <li>Business Card Design</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3 class="service-title">Digital Design</h3>
+                <p class="service-description">Social media templates and digital assets that drive engagement.</p>
+                <ul class="service-features">
+                    <li>Instagram Templates</li>
+                    <li>Social Media Graphics</li>
+                    <li>Web Design Elements</li>
+                    <li>Digital Campaigns</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🍽️</div>
+                <h3 class="service-title">Print Design</h3>
+                <p class="service-description">Beautiful print materials that make lasting impressions.</p>
+                <ul class="service-features">
+                    <li>Menu Design</li>
+                    <li>Brochures & Flyers</li>
+                    <li>Packaging Design</li>
+                    <li>Marketing Materials</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- Special Offer Banner -->
-    <section class="offer">
-        <h2>Limited Time Offer</h2>
-        <p>Get premium logo design + social media kit for just $199 (reg. $399)</p>
-        <a href="mailto:hello@3rio.design?subject=Special Offer Inquiry" class="book-button">Book Yours</a>
+    <!-- Contact -->
+    <section class="section" id="contact">
+        <div class="section-header">
+            <div class="section-number">04</div>
+            <h2 class="section-title">Let's Create Together</h2>
+            <p class="section-description">Ready to bring the glow to your brand? Let's start a conversation.</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p>Whether you need a complete rebrand or just want to enhance your current design, we're here to help bring your vision to life.</p>
+                <div class="contact-links">
+                    <a href="mailto:hello@3rio.design" class="contact-link">hello@3rio.design</a>
+                    <a href="https://instagram.com/3rio.design" class="contact-link" target="_blank">@3rio.design</a>
+                </div>
+            </div>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="project">Project Type</label>
+                    <input type="text" id="project" name="project" placeholder="Logo, Menu, Social Media, etc.">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Tell us about your project..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-links">
-            <a href="https://instagram.com/3rio.design" target="_blank">@3rio.design</a>
-            <a href="mailto:hello@3rio.design">hello@3rio.design</a>
-        </div>
-        <p>&copy; 2025 3rio. All rights reserved.</p>
+        <p>&copy; 2025 3rio. All rights reserved. Feel the glow.</p>
     </footer>
 
     <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const hoverElements = document.querySelectorAll('a, button, .work-item, .service-card');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
         // Initialize particles
         tsParticles.load("tsparticles", {
-            background: {
-                color: "transparent"
-            },
+            background: { color: "transparent" },
             fpsLimit: 60,
             particles: {
-                color: {
-                    value: ["#6E00FF", "#FF4500"]
-                },
+                color: { value: ["#6E00FF", "#FF4500"] },
                 links: {
                     color: "#6E00FF",
                     distance: 150,
                     enable: true,
-                    opacity: 0.2,
+                    opacity: 0.1,
                     width: 1
                 },
                 move: {
                     direction: "none",
                     enable: true,
-                    outModes: {
-                        default: "bounce"
-                    },
+                    outModes: { default: "bounce" },
                     random: false,
-                    speed: 1,
+                    speed: 0.5,
                     straight: false
                 },
                 number: {
-                    density: {
-                        enable: true,
-                        area: 800
-                    },
-                    value: 80
+                    density: { enable: true, area: 800 },
+                    value: 60
                 },
-                opacity: {
-                    value: 0.3
-                },
-                shape: {
-                    type: "circle"
-                },
-                size: {
-                    value: { min: 1, max: 3 }
-                }
+                opacity: { value: 0.2 },
+                shape: { type: "circle" },
+                size: { value: { min: 1, max: 2 } }
             },
             detectRetina: true
         });
@@ -616,34 +841,36 @@
         function typeWriter() {
             if (i < typewriterText.length) {
                 typewriterElement.innerHTML += typewriterText.charAt(i);
-                // Play click sound (simulated with a subtle audio context)
                 playClickSound();
                 i++;
-                setTimeout(typeWriter, 100);
+                setTimeout(typeWriter, 80);
             }
         }
 
         function playClickSound() {
-            // Create a simple click sound using Web Audio API
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(1200, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.01, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.05);
+            } catch (e) {
+                // Silent fail if audio context not available
+            }
         }
 
         // Start typewriter effect after page load
-        setTimeout(typeWriter, 1000);
+        setTimeout(typeWriter, 1500);
 
-        // Microphone input for light rays (optional feature)
+        // Microphone input for light rays
         async function initMicrophoneInput() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -671,52 +898,173 @@
             }
         }
 
-        // Initialize microphone input (user must interact first)
+        // Initialize microphone input on first user interaction
         document.addEventListener('click', initMicrophoneInput, { once: true });
 
-        // Scroll animations
+        // Smooth scroll navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animate');
                 }
             });
-        }, {
-            threshold: 0.1
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.work-item, .process-step, .service-card').forEach(el => {
+            observer.observe(el);
         });
 
-        // Observe all cards
-        document.querySelectorAll('.card').forEach(card => {
-            observer.observe(card);
+        // Navigation background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.8)';
+            }
         });
 
-        // Smooth scrolling for navigation
-        document.querySelector('.cta-button').addEventListener('click', (e) => {
+        // Contact form handling
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            document.querySelector('#featured').scrollIntoView({
-                behavior: 'smooth'
+            
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const project = formData.get('project');
+            const message = formData.get('message');
+            
+            // Create mailto link with form data
+            const subject = `New Project Inquiry from ${name}`;
+            const body = `Hi 3rio team,
+
+${message}
+
+Project Type: ${project}
+Contact Email: ${email}
+
+Best regards,
+${name}`;
+            
+            const mailtoLink = `mailto:hello@3rio.design?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Message Prepared!';
+            submitBtn.style.background = '#4CAF50';
+            
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.style.background = '';
+                this.reset();
+            }, 3000);
+        });
+
+        // Add subtle hover sound effects
+        document.querySelectorAll('.work-item, .service-card, .process-step, .contact-link').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(1500, audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0.005, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.1);
+                } catch (e) {
+                    // Silent fail
+                }
             });
         });
 
-        // Add hover sound effects
-        document.querySelectorAll('.card, .cta-button, .join-button, .book-button').forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                // Subtle hover sound
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(1200, audioContext.currentTime);
-                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.2);
-            });
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
         });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Dynamic particle count based on performance
+        let fps = 60;
+        let lastTime = 0;
+        
+        function measureFPS(currentTime) {
+            if (lastTime) {
+                fps = 1000 / (currentTime - lastTime);
+            }
+            lastTime = currentTime;
+            
+            // Adjust particle count based on FPS
+            if (fps < 30) {
+                // Reduce particles for better performance
+                tsParticles.load("tsparticles", {
+                    background: { color: "transparent" },
+                    fpsLimit: 30,
+                    particles: {
+                        color: { value: ["#6E00FF", "#FF4500"] },
+                        links: {
+                            color: "#6E00FF",
+                            distance: 100,
+                            enable: true,
+                            opacity: 0.1,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 0.3,
+                        },
+                        number: { value: 30 },
+                        opacity: { value: 0.2 },
+                        shape: { type: "circle" },
+                        size: { value: { min: 1, max: 2 } }
+                    },
+                    detectRetina: true
+                });
+            }
+            
+            requestAnimationFrame(measureFPS);
+        }
+        
+        requestAnimationFrame(measureFPS);
     </script>
 </body>
 </html>
