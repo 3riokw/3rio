@@ -8,7 +8,6 @@
   <style>
     :root {
       --purple: #6E00FF;
-      --purple-dark: #300135;
       --purple-light: #9E6CFF;
       --white: #FFFFFF;
       --bg-dark: #0D0019;
@@ -20,6 +19,7 @@
       background: var(--bg-dark);
       color: var(--white);
       overflow-x: hidden;
+      line-height: 1.4;
     }
     a { text-decoration: none; color: inherit; }
     header {
@@ -28,88 +28,90 @@
       width: 100%; display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
+      padding: 0.5rem 1rem;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
       z-index: 1000;
     }
-    header img { height: 45px; }
-    nav ul { display: flex; gap: 2rem; }
-    nav li { cursor: pointer; font-weight: 500; transition: color var(--transition); }
+    header img { height: 40px; }
+    nav ul { display: flex; gap: 1.2rem; }
+    nav li { cursor: pointer; font-weight: 500; font-size: 0.95rem; transition: color var(--transition); }
     nav li:hover { color: var(--purple-light); }
 
     /* Hero Section */
     .hero {
-      height: 100vh;
+      height: 80vh;
       background: url('assets/cover.jpg') center/cover no-repeat;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-top: 3rem;
     }
     .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0,0,0,0.5);
     }
     .hero-content {
       position: relative; z-index: 1;
       text-align: center;
       padding: 0 1rem;
-      max-width: 800px;
+      max-width: 700px;
     }
     .hero h1 {
-      font-size: 3.5rem;
+      font-size: 3rem;
       margin-bottom: 0.5rem;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
     }
     .hero p {
-      font-size: 1.25rem;
-      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
     }
     .btn {
       display: inline-block;
       background: var(--purple);
       color: var(--white);
       font-weight: 700;
-      padding: 0.75rem 1.5rem;
-      border-radius: 50px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
       text-transform: uppercase;
+      font-size: 0.85rem;
       letter-spacing: 1px;
       transition: background var(--transition), transform var(--transition);
     }
     .btn:hover {
       background: var(--purple-light);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
-    section { padding: 6rem 2rem; }
+    section { padding: 3rem 1rem; }
     h2 {
       text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
       color: var(--purple-light);
     }
 
     /* Inventory Grid */
     .inventory {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
     }
     .inventory .card {
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
     }
     .inventory img {
       width: 100%; display: block;
       transition: transform var(--transition);
     }
-    .inventory .card:hover img { transform: scale(1.1); }
+    .inventory .card:hover img { transform: scale(1.05); }
     .inventory .overlay {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
@@ -119,22 +121,22 @@
     .inventory .card:hover .overlay { opacity: 1; }
     .inventory .title {
       position: absolute;
-      bottom: 1rem; left: 1rem;
-      font-size: 1.2rem;
+      bottom: 0.5rem; left: 0.5rem;
+      font-size: 1rem;
       color: var(--white);
     }
 
     /* Before & After Slider */
     .before-after {
-      max-width: 800px;
-      margin: 0 auto 3rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
       position: relative;
     }
     .ba-wrapper {
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
     }
     .ba-wrapper img { width: 100%; display: block; }
     .ba-after {
@@ -143,9 +145,9 @@
     }
     .ba-handle {
       position: absolute; top: 50%; left: 50%;
-      width: 30px; height: 30px;
-      background: var(--white);
-      border: 3px solid var(--purple);
+      width: 24px; height: 24px;
+      background: var(--purple);
+      border: 2px solid var(--white);
       border-radius: 50%;
       transform: translate(-50%, -50%);
       cursor: ew-resize;
@@ -160,41 +162,43 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      gap: 1.5rem;
     }
     .event img,
     .templates img {
-      width: 100%; max-width: 320px;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      width: 100%; max-width: 280px;
+      border-radius: 8px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.3);
     }
 
     /* Offer Section */
     .offer {
       text-align: center;
-      padding: 4rem 2rem;
+      padding: 2rem 1rem;
       background: var(--purple);
       color: var(--white);
     }
-    .offer h2 { color: var(--white); }
-    .offer p { font-size: 1.5rem; margin: 1rem 0; }
-    .offer img { width: 160px; margin: 1.5rem 0; }
+    .offer h2 { font-size: 1.8rem; }
+    .offer p { font-size: 1rem; margin: 0.5rem 0; }
+    .offer img { width: 140px; margin: 1rem 0; }
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 2rem;
+      padding: 1.5rem 1rem;
       background: var(--bg-dark);
       color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
     }
-    footer a { color: var(--purple-light); font-weight: 500; }
+    footer a { color: var(--purple-light); }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1rem; }
-      header { padding: 1rem; }
-      nav ul { gap: 1rem; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 0.9rem; }
+      .btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+      section { padding: 2rem 0.5rem; }
+      h2 { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -250,27 +254,27 @@
     <div class="before-after">
       <div class="ba-wrapper">
         <img src="assets/before1.jpg" alt="Before 1">
-        <div class="ba-after"><img src="assets/after1.jpg" alt="After 1"></div>
-        <div class="ba-handle"></div>
+        <div class="ba-after" style="width:50%"><img src="assets/after1.jpg" alt="After 1"></div>
+        <div class="ba-handle" style="left:50%"></div>
       </div>
     </div>
     <div class="before-after">
       <div class="ba-wrapper">
         <img src="assets/before2.jpg" alt="Before 2">
-        <div class="ba-after"><img src="assets/after2.jpg" alt="After 2"></div>
-        <div class="ba-handle"></div>
+        <div class="ba-after" style="width:50%"><img src="assets/after2.jpg" alt="After 2"></div>
+        <div class="ba-handle" style="left:50%"></div>
       </div>
     </div>
   </section>
 
   <!-- Event -->
   <section id="event">
-    <h2>Free Friday Giveaway</n2>
+    <h2>Free Friday Giveaway</h2>
     <div class="event">
       <img src="assets/event.jpg" alt="Free Friday Wheel">
       <div>
         <p>First 10 people to comment will enter a draw to win a free graphic design of choice!</p>
-        <a href="https://instagram.com/3rio.kw" class="btn">Enter on Instagram</a>
+        <a href="https://instagram.com/3riokw" class="btn" target="_blank">Enter on Instagram</a>
       </div>
     </div>
   </section>
@@ -297,7 +301,7 @@
 
   <!-- Contact Footer -->
   <footer id="contact">
-    <p>Follow us on <a href="https://instagram.com/3rio.kw">@3rio.kw</a></p>
+    <p>Follow us on <a href="https://instagram.com/3riokw" target="_blank">@3riokw</a></p>
     <p>Email us at <a href="mailto:3riokw@gmail.com">3riokw@gmail.com</a></p>
   </footer>
 
