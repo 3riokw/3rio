@@ -2,203 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>3rio - Creative Design</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3rio – Creative Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --purple: #6E00FF;
       --purple-light: #9E6CFF;
       --white: #FFFFFF;
-      --bg-dark: #0D0019;
+      --gray-100: #F5F5F5;
+      --gray-800: #1F1F1F;
       --transition: 0.3s ease;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Rubik', sans-serif;
-      background: var(--bg-dark);
-      color: var(--white);
-      overflow-x: hidden;
-      line-height: 1.4;
-    }
-    a { text-decoration: none; color: inherit; }
-    header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 1rem;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(6px);
-      z-index: 1000;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Rubik', sans-serif; color: var(--gray-800); background: var(--white); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* Header */
+    header { position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.9); backdrop-filter: blur(6px); z-index: 1000; }
     header img { height: 40px; }
-    nav ul { display: flex; gap: 1.2rem; }
-    nav li { cursor: pointer; font-weight: 500; font-size: 0.95rem; transition: color var(--transition); }
-    nav li:hover { color: var(--purple-light); }
+    nav ul { display: flex; gap: 2rem; }
+    nav li { font-weight: 500; cursor: pointer; transition: color var(--transition); }
+    nav li:hover { color: var(--purple); }
 
-    /* Hero Section */
-    .hero {
-      height: 80vh;
-      background: url('assets/cover.jpg') center/cover no-repeat;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-top: 3rem;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-    }
-    .hero-content {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 0 1rem;
-      max-width: 700px;
-    }
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: 1.5px;
-    }
-    .hero p {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-    .btn {
-      display: inline-block;
-      background: var(--purple);
-      color: var(--white);
-      font-weight: 700;
-      padding: 0.6rem 1.2rem;
-      border-radius: 30px;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
-      transition: background var(--transition), transform var(--transition);
-    }
-    .btn:hover {
-      background: var(--purple-light);
-      transform: translateY(-2px);
-    }
+    /* Hero */
+    .hero { display: flex; align-items: center; justify-content: center; height: 90vh; background: url('assets/cover.jpg') center/cover no-repeat; position: relative; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+    .hero-content { position: relative; text-align: center; color: var(--white); max-width: 700px; padding: 0 1rem; }
+    .hero-content h1 { font-size: 3rem; margin-bottom: 0.5rem; font-weight: 700; }
+    .hero-content p { font-size: 1.1rem; margin-bottom: 1rem; }
+    .hero-content .btn { display: inline-block; background: var(--purple); color: var(--white); padding: 0.75rem 1.5rem; border-radius: 30px; font-weight: 500; transition: background var(--transition); }
+    .hero-content .btn:hover { background: var(--purple-light); }
 
-    section { padding: 3rem 1rem; }
-    h2 {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      color: var(--purple-light);
-    }
+    /* Section wrappers */
+    section { padding: 4rem 2rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h2 { text-align: center; font-size: 2rem; margin-bottom: 2rem; color: var(--gray-800); }
 
-    /* Inventory Grid */
-    .inventory {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .inventory .card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-    }
-    .inventory img {
-      width: 100%; display: block;
-      transition: transform var(--transition);
-    }
-    .inventory .card:hover img { transform: scale(1.05); }
-    .inventory .overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-      opacity: 0;
-      transition: opacity var(--transition);
-    }
-    .inventory .card:hover .overlay { opacity: 1; }
-    .inventory .title {
-      position: absolute;
-      bottom: 0.5rem; left: 0.5rem;
-      font-size: 1rem;
-      color: var(--white);
-    }
+    /* Inventory (Grid) */
+    .inventory { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .inventory .card { background: var(--gray-100); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform var(--transition); }
+    .inventory .card:hover { transform: translateY(-5px); }
+    .inventory .card img { width: 100%; }
+    .inventory .card h3 { font-size: 1.1rem; margin: 1rem; color: var(--gray-800); }
 
-    /* Before & After Slider */
-    .before-after {
-      max-width: 700px;
-      margin: 0 auto 2rem;
-      position: relative;
-    }
-    .ba-wrapper {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-    }
-    .ba-wrapper img { width: 100%; display: block; }
-    .ba-after {
-      position: absolute; top: 0; left: 0;
-      width: 50%; height: 100%; overflow: hidden;
-    }
-    .ba-handle {
-      position: absolute; top: 50%; left: 50%;
-      width: 24px; height: 24px;
-      background: var(--purple);
-      border: 2px solid var(--white);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      cursor: ew-resize;
-      transition: background var(--transition);
-    }
-    .ba-handle:hover { background: var(--purple-light); }
+    /* Before & After with diagonal clipping */
+    .before-after { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+    .ba-item { position: relative; border-radius: 8px; overflow: hidden; }
+    .ba-item img { display: block; width: 100%; }
+    .ba-item .label { position: absolute; top: 1rem; left: 1rem; background: var(--purple); color: var(--white); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.9rem; }
 
-    /* Event & Templates */
-    .event,
-    .templates {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-    }
-    .event img,
-    .templates img {
-      width: 100%; max-width: 280px;
-      border-radius: 8px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-    }
+    /* Event */
+    .event { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; }
+    .event img { flex: 1 1 300px; border-radius: 8px; }
+    .event .desc { flex: 1 1 300px; }
+    .event .desc p { margin-bottom: 1rem; }
 
-    /* Offer Section */
-    .offer {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: var(--purple);
-      color: var(--white);
-    }
-    .offer h2 { font-size: 1.8rem; }
-    .offer p { font-size: 1rem; margin: 0.5rem 0; }
-    .offer img { width: 140px; margin: 1rem 0; }
+    /* Templates */
+    .templates { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+
+    /* Offer */
+    .offer { background: var(--purple); color: var(--white); text-align: center; border-radius: 8px; }
+    .offer p { font-size: 1rem; margin: 1rem 0; }
+    .offer .btn { background: var(--white); color: var(--purple); }
 
     /* Footer */
-    footer {
-      text-align: center;
-      padding: 1.5rem 1rem;
-      background: var(--bg-dark);
-      color: rgba(255,255,255,0.7);
-      font-size: 0.9rem;
-    }
-    footer a { color: var(--purple-light); }
+    footer { text-align: center; padding: 2rem; background: var(--gray-100); }
+    footer a { color: var(--purple); font-weight: 500; }
 
-    /* Responsive */
+    /* Responsive tweaks */
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2.2rem; }
-      .hero p { font-size: 0.9rem; }
-      .btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
-      section { padding: 2rem 0.5rem; }
-      h2 { font-size: 1.5rem; }
+      .hero-content h1 { font-size: 2.2rem; }
+      .event { flex-direction: column; }
     }
   </style>
 </head>
@@ -220,111 +96,81 @@
   <!-- Hero -->
   <section id="hero" class="hero">
     <div class="hero-content">
-      <h1>3rio Creative Design</h1>
-      <p>Your brand, amplified with futuristic flair</p>
-      <a href="#inventory" class="btn">Explore Work</a>
+      <h1>Elevate Your Brand with 3rio</h1>
+      <p>Professional logos, templates, thumbnails & more. Crafted with precision and passion.</p>
+      <a href="#inventory" class="btn">See Inventory</a>
     </div>
   </section>
 
   <!-- Inventory -->
   <section id="inventory">
-    <h2>Inventory Showcase</h2>
-    <div class="inventory">
-      <div class="card">
-        <img src="assets/inventory1.jpg" alt="Item 1">
-        <div class="overlay"></div>
-        <div class="title">Item One</div>
-      </div>
-      <div class="card">
-        <img src="assets/inventory2.jpg" alt="Item 2">
-        <div class="overlay"></div>
-        <div class="title">Item Two</div>
-      </div>
-      <div class="card">
-        <img src="assets/inventory3.jpg" alt="Item 3">
-        <div class="overlay"></div>
-        <div class="title">Item Three</div>
+    <div class="container">
+      <h2>Our Featured Work</h2>
+      <div class="inventory">
+        <div class="card"><img src="assets/inventory1.jpg" alt=""><h3>Thumbnail Design</h3></div>
+        <div class="card"><img src="assets/inventory2.jpg" alt=""><h3>Brand Logo</h3></div>
+        <div class="card"><img src="assets/inventory3.jpg" alt=""><h3>Instagram Template</h3></div>
       </div>
     </div>
   </section>
 
-  <!-- Portfolio -->
+  <!-- Portfolio Before & After -->
   <section id="portfolio">
-    <h2>Before & After Samples</h2>
-    <div class="before-after">
-      <div class="ba-wrapper">
-        <img src="assets/before1.jpg" alt="Before 1">
-        <div class="ba-after" style="width:50%"><img src="assets/after1.jpg" alt="After 1"></div>
-        <div class="ba-handle" style="left:50%"></div>
-      </div>
-    </div>
-    <div class="before-after">
-      <div class="ba-wrapper">
-        <img src="assets/before2.jpg" alt="Before 2">
-        <div class="ba-after" style="width:50%"><img src="assets/after2.jpg" alt="After 2"></div>
-        <div class="ba-handle" style="left:50%"></div>
+    <div class="container">
+      <h2>Before & After</h2>
+      <div class="before-after">
+        <div class="ba-item"><span class="label">Before</span><img src="assets/before1.jpg" alt="Before"></div>
+        <div class="ba-item"><span class="label">After</span><img src="assets/after1.jpg" alt="After"></div>
       </div>
     </div>
   </section>
 
   <!-- Event -->
   <section id="event">
-    <h2>Free Friday Giveaway</h2>
-    <div class="event">
-      <img src="assets/event.jpg" alt="Free Friday Wheel">
-      <div>
-        <p>First 10 people to comment will enter a draw to win a free graphic design of choice!</p>
-        <a href="https://instagram.com/3riokw" class="btn" target="_blank">Enter on Instagram</a>
+    <div class="container">
+      <h2>Free Friday Giveaway</h2>
+      <div class="event">
+        <img src="assets/event.jpg" alt="Giveaway Wheel">
+        <div class="desc">
+          <p>Join our Free Friday: first 10 to comment on Instagram enter a draw to win a custom design pack!</p>
+          <a href="https://instagram.com/3riokw" class="btn" target="_blank">Enter Now</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Templates -->
-  <section class="templates">
-    <h2>Instagram Template Samples</h2>
-    <div class="event">
-      <img src="assets/template1.jpg" alt="Template 1">
-      <img src="assets/template2.jpg" alt="Template 2">
-      <img src="assets/template3.jpg" alt="Template 3">
-      <img src="assets/template4.jpg" alt="Template 4">
+  <!-- Templates Gallery -->
+  <section>
+    <div class="container">
+      <h2>Instagram Templates</h2>
+      <div class="templates">
+        <img src="assets/template1.jpg" alt="Template 1">
+        <img src="assets/template2.jpg" alt="Template 2">
+        <img src="assets/template3.jpg" alt="Template 3">
+        <img src="assets/template4.jpg" alt="Template 4">
+      </div>
     </div>
   </section>
 
-  <!-- Offer -->
-  <section id="offer" class="offer">
-    <h2>Limited-Time YouTube Thumbnails</h2>
-    <p>Starting at <strong>5.900 KWD</strong> &middot; 2–3 day delivery</p>
-    <img src="assets/offer.jpg" alt="Limited Offer">
-    <p>Only 4 slots left!</p>
-    <a href="mailto:3riokw@gmail.com" class="btn">Book Now</a>
+  <!-- Limited Offer -->
+  <section id="offer">
+    <div class="container offer">
+      <h2>Special Thumbnail Package</h2>
+      <p>Only 5.900 KWD – 2–3 day delivery. Limited slots available.</p>
+      <a href="mailto:3riokw@gmail.com" class="btn">Book Now</a>
+    </div>
   </section>
 
   <!-- Contact Footer -->
   <footer id="contact">
     <p>Follow us on <a href="https://instagram.com/3riokw" target="_blank">@3riokw</a></p>
-    <p>Email us at <a href="mailto:3riokw@gmail.com">3riokw@gmail.com</a></p>
+    <p>Email: <a href="mailto:3riokw@gmail.com">3riokw@gmail.com</a></p>
   </footer>
 
   <script>
     function scrollToSection(id) {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
-    document.querySelectorAll('.ba-wrapper').forEach(wrapper => {
-      const handle = wrapper.querySelector('.ba-handle');
-      const after = wrapper.querySelector('.ba-after');
-      let dragging = false;
-      handle.addEventListener('mousedown', () => dragging = true);
-      window.addEventListener('mouseup', () => dragging = false);
-      window.addEventListener('mousemove', e => {
-        if (!dragging) return;
-        const rect = wrapper.getBoundingClientRect();
-        let offset = e.clientX - rect.left;
-        offset = Math.max(0, Math.min(offset, rect.width));
-        const pct = (offset / rect.width) * 100;
-        after.style.width = pct + '%';
-        handle.style.left = pct + '%';
-      });
-    });
   </script>
 </body>
 </html>
