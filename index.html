@@ -3,200 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3rio – Creative Design</title>
+  <title>3rio – Creative Design</title>
+  <!-- Fonts & Libraries -->
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
   <style>
     :root {
       --purple: #6E00FF;
+      --orange: #FF4500;
       --white: #FFFFFF;
-      --black: #0A0A0A;
-      --gray: #F5F5F5;
-      --transition: 0.4s ease;
+      --black: #000000;
+      --transition: 0.3s ease;
     }
-    * { box-sizing: border-box; margin:0; padding:0; }
-    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Rubik', sans-serif;
-      background: var(--white);
-      color: var(--black);
-      line-height: 1.5;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
     }
-    a { text-decoration: none; color: inherit; }
+    /* Header */
     header {
-      position: fixed; top:0; left:0; width:100%; padding:1rem 2rem;
-      display:flex; justify-content:space-between; align-items:center;
-      background:rgba(255,255,255,0.8); backdrop-filter:blur(10px);
-      z-index:1000;
+      position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+      z-index: 1000;
     }
-    header img { height:32px; }
-    nav ul { display:flex; gap:1.5rem; }
-    nav li { font-weight:500; font-size:0.9rem; cursor:pointer; transition: color var(--transition); }
-    nav li:hover { color: var(--purple); }
-
-    .hero {
-      height:100vh; background: url('assets/cover.jpg') center/cover no-repeat;
-      display:flex; align-items:center; justify-content:center; position:relative;
-    }
-    .hero::before {
-      content:''; position:absolute; inset:0; background: rgba(0,0,0,0.6);
-    }
-    .hero-content {
-      position:relative; text-align:center; color:var(--white); max-width:600px; padding:0 1rem;
-    }
+    header img { height: 32px; }
+    nav ul { display: flex; gap: 1.5rem; }
+    nav li { cursor: pointer; font-weight: 500; transition: color var(--transition); }
+    nav li:hover { color: var(--orange); }
+    /* Hero Section */
+    #hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; }
+    #tsparticles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    .hero-content { position: relative; text-align: center; z-index: 2; padding: 1rem; }
     .hero-content h1 {
-      font-size:3.2rem; margin-bottom:0.5rem; font-weight:700;
+      font-size: 3rem;
+      text-shadow: 0 0 8px var(--orange);
+      animation: neonPulse 2s infinite;
     }
     .hero-content p {
-      font-size:1rem; margin-bottom:1.5rem;
+      font-size: 1rem;
+      margin: 1rem 0;
+      opacity: 0;
     }
-    .hero-content .btn {
-      padding:0.75rem 1.5rem; background:var(--purple); color:var(--white);
-      border-radius:30px; font-weight:500; font-size:0.9rem; transition: background var(--transition);
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--purple);
+      color: var(--white);
+      border-radius: 30px;
+      transition: background var(--transition), transform var(--transition);
     }
-    .hero-content .btn:hover { background: #8E3FFF; }
-
-    section { padding:6rem 2rem; }
-    .container { max-width:1100px; margin:0 auto; }
-    h2 {
-      text-align:center; font-size:2rem; margin-bottom:2rem; font-weight:500;
-    }
-
-    .grid-3 { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:2rem; }
-
-    .card {
-      background:var(--gray); border-radius:8px; overflow:hidden;
-      transition: transform var(--transition), box-shadow var(--transition);
-    }
-    .card:hover { transform: translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
-    .card img { width:100%; display:block; }
-    .card h3 { padding:1rem; font-size:1.1rem; }
-
-    /* Before & After diagonal split */
-    .before-after {
-      display:flex; flex-wrap:wrap; gap:2rem;
-    }
-    .ba-item {
-      flex:1 1 45%; position:relative; border-radius:8px; overflow:hidden;
-    }
-    .ba-item img { width:100%; display:block; }
-    .ba-item::after {
-      content: attr(data-label);
-      position:absolute; top:1rem; left:1rem;
-      background:var(--purple); color:var(--white);
-      padding:0.3rem 0.6rem; border-radius:4px;
-      font-size:0.8rem;
-    }
-
-    .event { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
-    .event img { flex:1 1 300px; border-radius:8px; }
-    .event .desc { flex:1 1 300px; }
-    .event .desc p { margin-bottom:1rem; }
-    .event .desc .btn { margin-top:1rem; }
-
-    .templates { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:1.5rem; }
-
-    .offer-banner {
-      background:var(--purple); color:var(--white); text-align:center;
-      padding:2rem; border-radius:8px;
-    }
-    .offer-banner p { margin:1rem 0; font-size:1rem; }
-    .offer-banner .btn { background:var(--white); color:var(--purple); }
-
-    footer {
-      text-align:center; padding:2rem; background:var(--black); color:var(--white);
-    }
-    footer a { color:var(--purple); font-weight:500; }
-
-    @media (max-width:768px) {
-      .hero-content h1 { font-size:2.4rem; }
-      section { padding:4rem 1rem; }
-      .before-after { flex-direction:column; }
+    .btn:hover { background: var(--orange); transform: translateY(-2px); }
+    @keyframes neonPulse {
+      0%,100% { text-shadow: 0 0 8px var(--orange); }
+      50% { text-shadow: 0 0 20px var(--orange); }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/logo.png" alt="3rio logo">
+    <img src="assets/logo.png" alt="3rio Logo">
     <nav>
       <ul>
-        <li onclick="scrollToSection('hero')">Home</li>
-        <li onclick="scrollToSection('inventory')">Work</li>
-        <li onclick="scrollToSection('portfolio')">Before/After</li>
-        <li onclick="scrollToSection('event')">Event</li>
-        <li onclick="scrollToSection('contact')">Contact</li>
+        <li onclick="scrollTo('hero')">Home</li>
+        <li onclick="scrollTo('inventory')">Work</li>
+        <li onclick="scrollTo('portfolio')">Before/After</li>
+        <li onclick="scrollTo('event')">Event</li>
+        <li onclick="scrollTo('templates')">Templates</li>
+        <li onclick="scrollTo('offer')">Offer</li>
+        <li onclick="scrollTo('contact')">Contact</li>
       </ul>
     </nav>
   </header>
 
-  <section id="hero" class="hero">
+  <!-- Hero -->
+  <section id="hero">
+    <div id="tsparticles"></div>
     <div class="hero-content">
-      <h1>Crafting Digital Brilliance</h1>
-      <p>From logos to templates, experience next-level design with 3rio.</p>
+      <h1>Feel the glow &ndash; Powered by 3rio</h1>
+      <p id="subheading"></p>
       <a href="#inventory" class="btn">Explore Work</a>
     </div>
   </section>
 
-  <section id="inventory">
-    <div class="container">
-      <h2>Featured Creations</n2>
-      <div class="grid-3">
-        <div class="card"><img src="assets/inventory1.jpg" alt=""><h3>Thumbnail Magic</h3></div>
-        <div class="card"><img src="assets/inventory2.jpg" alt=""><h3>Logo Craft</h3></div>
-        <div class="card"><img src="assets/inventory3.jpg" alt=""><h3>Template Suite</h3></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="portfolio">
-    <div class="container">
-      <h2>Before & After Transformations</n2>
-      <div class="before-after">
-        <div class="ba-item" data-label="Before"><img src="assets/before1.jpg" alt="Before"></div>
-        <div class="ba-item" data-label="After"><img src="assets/after1.jpg" alt="After"></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="event">
-    <div class="container">
-      <h2>Free Friday Giveaway</h2>
-      <div class="event">
-        <img src="assets/event.jpg" alt="Wheel Event">
-        <div class="desc">
-          <p>Be among the first 10 to comment on our Instagram & win a free design pack!</p>
-          <a href="https://instagram.com/3riokw" target="_blank" class="btn">Join Now</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <h2>Instagram Templates Gallery</h2>
-      <div class="templates">
-        <img src="assets/template1.jpg" alt="">
-        <img src="assets/template2.jpg" alt="">
-        <img src="assets/template3.jpg" alt="">
-        <img src="assets/template4.jpg" alt="">
-      </div>
-    </div>
-  </section>
-
-  <section id="offer">
-    <div class="container offer-banner">
-      <h2>Special Thumbnail Package</h2>
-      <p>5.900 KWD – 2–3 day delivery. Limited availability.</p>
-      <a href="mailto:3riokw@gmail.com" class="btn">Book Yours</a>
-    </div>
-  </section>
-
-  <footer id="contact">
-    <p>Follow: <a href="https://instagram.com/3riokw" target="_blank">@3riokw</a></p>
-    <p>Email: <a href="mailto:3riokw@gmail.com">3riokw@gmail.com</a></p>
-  </footer>
+  <!-- Placeholder for other sections -->
+  <section id="inventory"></section>
+  <section id="portfolio"></section>
+  <section id="event"></section>
+  <section id="templates"></section>
+  <section id="offer"></section>
+  <footer id="contact"></footer>
 
   <script>
-    function scrollToSection(id) {
+    // Initialize particles background
+    tsParticles.load("tsparticles", {
+      particles: {
+        number: { value: 60 },
+        color: { value: "#fff" },
+        opacity: { value: 0.4 },
+        size: { value: 3 },
+        move: { enable: true, speed: 0.6, out_mode: "bounce" }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: "repulse" } } },
+      retina_detect: true
+    });
+
+    // Typewriter with SFX
+    const text = "From logos to menus, we bring the wow to your workflow";
+    const sub = document.getElementById("subheading");
+    const sound = new Howl({ src: ["assets/typewriter.mp3"], volume: 0.2 });
+    let idx = 0;
+    function type() {
+      if (idx < text.length) {
+        sub.textContent += text[idx++];
+        sound.play();
+        setTimeout(type, 80);
+      } else {
+        sub.style.opacity = 1;
+      }
+    }
+    window.addEventListener("load", () => setTimeout(type, 500));
+
+    // Smooth scroll helper
+    function scrollTo(id) {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
   </script>
