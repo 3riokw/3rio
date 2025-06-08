@@ -50,8 +50,8 @@
             transform: scale(2);
         }
 
-        /* Audio Visualizer */
-        .audio-visualizer {
+        /* Purple Smoke Visualizer */
+        .smoke-visualizer {
             position: fixed;
             top: 0;
             left: 0;
@@ -59,16 +59,62 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
-            opacity: 0.6;
+            overflow: hidden;
         }
 
-        .visualizer-bar {
+        .smoke-particle {
             position: absolute;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to top, transparent, var(--electric-purple), transparent);
-            transform-origin: bottom;
-            transition: height 0.1s ease;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(110, 0, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: smoke-flow 20s infinite ease-in-out;
+        }
+
+        .smoke-particle:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+
+        .smoke-particle:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(75, 0, 130, 0.25) 0%, transparent 70%);
+            animation-duration: 18s;
+            animation-delay: -10s;
+        }
+
+        .smoke-particle:nth-child(4) {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(110, 0, 255, 0.2) 0%, transparent 70%);
+            animation-duration: 22s;
+            animation-delay: -15s;
+        }
+
+        @keyframes smoke-flow {
+            0% {
+                transform: translate(-100%, 100%) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(50vw, -50vh) rotate(180deg) scale(1.2);
+                opacity: 0.6;
+            }
+            80% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(120vw, 100vh) rotate(360deg) scale(0.8);
+                opacity: 0;
+            }
         }
 
         /* Stars Background */
@@ -699,8 +745,13 @@
     <!-- Stars Background -->
     <div class="stars-container" id="stars"></div>
 
-    <!-- Audio Visualizer -->
-    <div class="audio-visualizer" id="visualizer"></div>
+    <!-- Purple Smoke Visualizer -->
+    <div class="smoke-visualizer">
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+    </div>
 
     <!-- Navigation -->
     <nav class="nav">
@@ -727,6 +778,15 @@
         </div>
         <div class="scroll-indicator">
             <p>Scroll to explore</p>
+            <!-- Logo Design Showcase -->
+            <div class="work-item" data-project="logo-showcase">
+                <div class="work-content">
+                    <div class="work-category">Logo Collection</div>
+                    <h3 class="work-title">Logo Design Showcase</h3>
+                    <p class="work-description">A curated collection of our best logo designs across various industries.</p>
+                    <a href="#" class="view-project-btn">View Gallery</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -750,10 +810,10 @@
             <!-- Midnight Menaces -->
             <div class="work-item" data-project="midnight-menaces">
                 <div class="work-content">
-                    <div class="work-category">Logo Design</div>
+                    <div class="work-category">Logo Design - Before & After</div>
                     <h3 class="work-title">Midnight Menaces</h3>
-                    <p class="work-description">Bold, edgy gaming brand with striking skull motif and premium typography.</p>
-                    <a href="#" class="view-project-btn">View Project</a>
+                    <p class="work-description">Complete brand transformation from concept to final design with striking skull motif.</p>
+                    <a href="#" class="view-project-btn">View Transformation</a>
                 </div>
             </div>
             <!-- Gaming Templates -->
