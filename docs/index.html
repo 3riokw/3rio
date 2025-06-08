@@ -637,28 +637,32 @@
             <p class="section-description">Explore our latest projects where creativity meets strategy to deliver exceptional brand experiences.</p>
         </div>
         <div class="work-grid">
-            <div class="work-item">
+            <div class="work-item" style="background: linear-gradient(45deg, #6E00FF, #FF4500); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                🎨
                 <div class="work-content">
                     <div class="work-category">Brand Identity</div>
                     <h3 class="work-title">Luxe Restaurant Rebrand</h3>
                     <p class="work-description">Complete visual identity transformation including logo, menu design, and digital presence.</p>
                 </div>
             </div>
-            <div class="work-item">
+            <div class="work-item" style="background: linear-gradient(135deg, #FF4500, #6E00FF); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                📱
                 <div class="work-content">
                     <div class="work-category">Digital Campaign</div>
                     <h3 class="work-title">Social Media Mastery</h3>
                     <p class="work-description">Instagram templates and content strategy that increased engagement by 300%.</p>
                 </div>
             </div>
-            <div class="work-item">
+            <div class="work-item" style="background: linear-gradient(45deg, #333, #6E00FF); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                📦
                 <div class="work-content">
                     <div class="work-category">Package Design</div>
                     <h3 class="work-title">Product Packaging Suite</h3>
                     <p class="work-description">Award-winning packaging design that boosted shelf appeal and sales.</p>
                 </div>
             </div>
-            <div class="work-item">
+            <div class="work-item" style="background: linear-gradient(135deg, #6E00FF, #333); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                🌐
                 <div class="work-content">
                     <div class="work-category">Web Experience</div>
                     <h3 class="work-title">Interactive Portfolio</h3>
@@ -1015,27 +1019,17 @@ ${name}`;
 
         // Add loading animation
         window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
+            // Remove loading animation safely
             document.body.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
+            document.body.style.opacity = '1';
         });
 
         // Dynamic particle count based on performance
-        let fps = 60;
-        let lastTime = 0;
-        
-        function measureFPS(currentTime) {
-            if (lastTime) {
-                fps = 1000 / (currentTime - lastTime);
-            }
-            lastTime = currentTime;
+        function optimizeParticles() {
+            const isLowEnd = navigator.hardwareConcurrency <= 4 || window.innerWidth < 768;
             
-            // Adjust particle count based on FPS
-            if (fps < 30) {
-                // Reduce particles for better performance
+            if (isLowEnd) {
+                // Reduce particles for better performance on mobile/low-end devices
                 tsParticles.load("tsparticles", {
                     background: { color: "transparent" },
                     fpsLimit: 30,
@@ -1052,7 +1046,7 @@ ${name}`;
                             enable: true,
                             speed: 0.3,
                         },
-                        number: { value: 30 },
+                        number: { value: 25 },
                         opacity: { value: 0.2 },
                         shape: { type: "circle" },
                         size: { value: { min: 1, max: 2 } }
@@ -1060,11 +1054,10 @@ ${name}`;
                     detectRetina: true
                 });
             }
-            
-            requestAnimationFrame(measureFPS);
         }
         
-        requestAnimationFrame(measureFPS);
+        // Call optimization on load
+        setTimeout(optimizeParticles, 2000);
     </script>
 </body>
 </html>
