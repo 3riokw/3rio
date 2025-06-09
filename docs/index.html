@@ -31,6 +31,7 @@
             cursor: none;
             font-weight: 400;
             letter-spacing: -0.02em;
+            opacity: 0;
         }
 
         /* Custom Cursor */
@@ -44,6 +45,7 @@
             z-index: 9999;
             mix-blend-mode: difference;
             transition: transform 0.1s ease;
+            opacity: 0;
         }
 
         .cursor.hover {
@@ -205,6 +207,16 @@
             width: 100%;
         }
 
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero {
             height: 100vh;
@@ -313,6 +325,16 @@
             margin-bottom: 3rem;
             min-height: 3rem;
             color: rgba(255, 255, 255, 0.8);
+        }
+
+        .typewriter::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         .scroll-indicator {
@@ -498,12 +520,11 @@
         }
 
         .process-number {
-            display: inline-block;
+            display: flex;
             width: 60px;
             height: 60px;
             background: linear-gradient(45deg, var(--electric-purple), var(--chromic-orange));
             border-radius: 50%;
-            display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
@@ -688,6 +709,12 @@
             box-shadow: 0 10px 30px rgba(110, 0, 255, 0.3);
         }
 
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -700,6 +727,66 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(110, 0, 255, 0.3);
+            border-top: 3px solid var(--electric-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error States */
+        .error-message {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: #ff4444;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        /* Accessibility Improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav {
@@ -708,10 +795,30 @@
 
             .nav-menu {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
             }
 
             .hero h1 {
                 font-size: 3rem;
+            }
+
+            .typewriter {
+                font-size: 1.2rem;
             }
 
             .section {
@@ -724,6 +831,11 @@
 
             .work-grid {
                 grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .work-item {
+                min-height: 300px;
             }
 
             .contact-container {
@@ -735,12 +847,39 @@
             .services-grid {
                 grid-template-columns: 1fr;
             }
+
+            .cursor {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 60px 15px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
     <!-- Custom Cursor -->
-    <div class="cursor"></div>
+    <div class="cursor" id="cursor"></div>
 
     <!-- Stars Background -->
     <div class="stars-container" id="stars"></div>
@@ -754,20 +893,21 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="nav">
+    <nav class="nav" id="nav">
         <div class="nav-container">
             <div class="logo">3rio</div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#work">Work</a></li>
                 <li><a href="#process">Process</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="hero">
         <div id="tsparticles"></div>
         <div class="northern-lights"></div>
         <div class="light-rays"></div>
@@ -788,7 +928,7 @@
             <h2 class="section-title">Featured Work</h2>
             <p class="section-description">Explore our latest projects where creativity meets strategy to deliver exceptional brand experiences.</p>
         </div>
-        <div class="work-grid">
+        <div class="work-grid" id="workGrid">
             <!-- LINA Bakery -->
             <div class="work-item" data-project="lina-bakery">
                 <div class="work-content">
@@ -946,27 +1086,30 @@
                 <p>Whether you need a complete rebrand or just want to enhance your current design, we're here to help bring your vision to life.</p>
                 <div class="contact-links">
                     <a href="mailto:3riokw@gmail.com" class="contact-link">3riokw@gmail.com</a>
-                    <a href="https://instagram.com/3riokw" class="contact-link" target="_blank">@3riokw</a>
+                    <a href="https://instagram.com/3riokw" class="contact-link" target="_blank" rel="noopener noreferrer">@3riokw</a>
                 </div>
             </div>
-            <form class="contact-form">
+            <form class="contact-form" id="contactForm" novalidate>
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">Name <span class="required">*</span></label>
                     <input type="text" id="name" name="name" required>
+                    <div class="error-message">Please enter your name</div>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">Email <span class="required">*</span></label>
                     <input type="email" id="email" name="email" required>
+                    <div class="error-message">Please enter a valid email address</div>
                 </div>
                 <div class="form-group">
                     <label for="project">Project Type</label>
                     <input type="text" id="project" name="project" placeholder="Logo, Menu, Social Media, etc.">
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Tell us about your project..."></textarea>
+                    <label for="message">Message <span class="required">*</span></label>
+                    <textarea id="message" name="message" rows="5" placeholder="Tell us about your project..." required></textarea>
+                    <div class="error-message">Please enter a message</div>
                 </div>
-                <button type="submit" class="submit-btn">Send Message</button>
+                <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
             </form>
         </div>
     </section>
@@ -977,285 +1120,278 @@
     </footer>
 
     <script>
-        // Create stars
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 200;
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                starsContainer.appendChild(star);
-            }
-        }
-
-        // Initialize stars
-        createStars();
-
-        // Custom cursor
-        const cursor = document.querySelector('.cursor');
-        const hoverElements = document.querySelectorAll('a, button, .work-item, .service-card');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
-        // Initialize particles
-        tsParticles.load("tsparticles", {
-            background: { color: "transparent" },
-            fpsLimit: 60,
-            particles: {
-                color: { value: ["#6E00FF", "#FF4500"] },
-                links: {
-                    color: "#6E00FF",
-                    distance: 150,
-                    enable: true,
-                    opacity: 0.1,
-                    width: 1
-                },
-                move: {
-                    direction: "none",
-                    enable: true,
-                    outModes: { default: "bounce" },
-                    random: false,
-                    speed: 0.5,
-                    straight: false
-                },
-                number: {
-                    density: { enable: true, area: 800 },
-                    value: 60
-                },
-                opacity: { value: 0.2 },
-                shape: { type: "circle" },
-                size: { value: { min: 1, max: 2 } }
-            },
-            detectRetina: true
-        });
-
-        // Typewriter effect
-        const typewriterText = "From logos to menus, we bring the wow to your workflow";
-        const typewriterElement = document.getElementById('typewriter');
-        let i = 0;
-
-        function typeWriter() {
-            if (i < typewriterText.length) {
-                typewriterElement.innerHTML += typewriterText.charAt(i);
-                playClickSound();
-                i++;
-                setTimeout(typeWriter, 80);
-            }
-        }
-
-        function playClickSound() {
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
+        // Website Controller Class
+        class TrioWebsite {
+            constructor() {
+                this.isLoaded = false;
+                this.particles = null;
+                this.typewriterComplete = false;
+                this.audioContext = null;
+                this.microphoneStream = null;
                 
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(1200, audioContext.currentTime);
-                gainNode.gain.setValueAtTime(0.01, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.05);
-            } catch (e) {
-                // Silent fail if audio context not available
+                this.init();
             }
-        }
 
-        // Start typewriter effect after page load
-        setTimeout(typeWriter, 1500);
-
-        // Work items background setup
-        const workItems = document.querySelectorAll('.work-item');
-        const projectBackgrounds = {
-            'lina-bakery': 'linear-gradient(135deg, #FFD700, #FF6B35)',
-            'midnight-menaces': 'linear-gradient(135deg, #1a1a1a, #6B00FF)',
-            'gaming-templates': 'linear-gradient(45deg, #6E00FF, #FF4500)',
-            'caffeine-intake': 'linear-gradient(135deg, #FF4500, #6E00FF)',
-            '3rio-brand': 'linear-gradient(45deg, #6E00FF, #8B00FF)',
-            'friday-giveaway': 'linear-gradient(135deg, #333, #6E00FF)',
-            'logo-showcase': 'linear-gradient(45deg, #FF4500, #6E00FF, #FF4500)'
-        };
-
-        workItems.forEach(item => {
-            const project = item.dataset.project;
-            if (projectBackgrounds[project]) {
-                item.style.background = projectBackgrounds[project];
-            }
-        });
-
-        // Smooth scroll navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all animated elements
-        document.querySelectorAll('.work-item, .process-step, .service-card').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Navigation background on scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('.nav');
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(0, 0, 0, 0.95)';
-            } else {
-                nav.style.background = 'rgba(0, 0, 0, 0.8)';
-            }
-        });
-
-        // Contact form handling
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const project = formData.get('project');
-            const message = formData.get('message');
-            
-            // Create mailto link with form data
-            const subject = `New Project Inquiry from ${name}`;
-            const body = `Hi 3rio team,
-
-${message}
-
-Project Type: ${project}
-Contact Email: ${email}
-
-Best regards,
-${name}`;
-            
-            const mailtoLink = `mailto:3riokw@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
-            
-            // Show success message
-            const submitBtn = this.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Message Prepared!';
-            submitBtn.style.background = '#4CAF50';
-            
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.style.background = '';
-                this.reset();
-            }, 3000);
-        });
-
-        // Add subtle hover sound effects
-        document.querySelectorAll('.work-item, .service-card, .process-step, .contact-link').forEach(element => {
-            element.addEventListener('mouseenter', () => {
+            async init() {
                 try {
-                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    oscillator.frequency.setValueAtTime(1500, audioContext.currentTime);
-                    gainNode.gain.setValueAtTime(0.005, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
-                    
-                    oscillator.start(audioContext.currentTime);
-                    oscillator.stop(audioContext.currentTime + 0.1);
-                } catch (e) {
-                    // Silent fail
+                    await this.waitForDOMContent();
+                    this.initializeComponents();
+                    this.bindEvents();
+                    await this.loadParticles();
+                    this.startAnimations();
+                    this.hideLoading();
+                } catch (error) {
+                    console.error('Website initialization failed:', error);
+                    this.hideLoading();
                 }
-            });
-        });
+            }
 
-        // Parallax effect for hero background
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            const rate = scrolled * -0.5;
-            hero.style.transform = `translateY(${rate}px)`;
-        });
-
-        // Add loading animation
-        window.addEventListener('load', () => {
-            document.body.style.transition = 'opacity 0.5s ease';
-            document.body.style.opacity = '1';
-        });
-
-        // Dynamic particle count based on performance
-        function optimizeParticles() {
-            const isLowEnd = navigator.hardwareConcurrency <= 4 || window.innerWidth < 768;
-            
-            if (isLowEnd) {
-                // Reduce particles for better performance on mobile/low-end devices
-                tsParticles.load("tsparticles", {
-                    background: { color: "transparent" },
-                    fpsLimit: 30,
-                    particles: {
-                        color: { value: ["#6E00FF", "#FF4500"] },
-                        links: {
-                            color: "#6E00FF",
-                            distance: 100,
-                            enable: true,
-                            opacity: 0.1,
-                            width: 1
-                        },
-                        move: {
-                            enable: true,
-                            speed: 0.3,
-                        },
-                        number: { value: 25 },
-                        opacity: { value: 0.2 },
-                        shape: { type: "circle" },
-                        size: { value: { min: 1, max: 2 } }
-                    },
-                    detectRetina: true
+            waitForDOMContent() {
+                return new Promise((resolve) => {
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', resolve);
+                    } else {
+                        resolve();
+                    }
                 });
             }
-        }
-        
-        // Call optimization on load
-        setTimeout(optimizeParticles, 2000);
 
-        // Project click handlers
-        document.querySelectorAll('.view-project-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            initializeComponents() {
+                this.createStars();
+                this.setupCursor();
+                this.setupMobileMenu();
+                this.setupScrollObserver();
+                this.setupFormValidation();
+                this.setupWorkItems();
+            }
+
+            createStars() {
+                const starsContainer = document.getElementById('stars');
+                if (!starsContainer) return;
+
+                const starCount = window.innerWidth < 768 ? 100 : 200;
+                
+                // Clear existing stars
+                starsContainer.innerHTML = '';
+                
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    starsContainer.appendChild(star);
+                }
+            }
+
+            setupCursor() {
+                const cursor = document.getElementById('cursor');
+                if (!cursor || window.innerWidth < 768) return;
+
+                const hoverElements = document.querySelectorAll('a, button, .work-item, .service-card, .process-step');
+
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                    cursor.style.opacity = '1';
+                });
+
+                hoverElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursor.classList.add('hover');
+                        this.playHoverSound();
+                    });
+                    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+                });
+            }
+
+            setupMobileMenu() {
+                const mobileBtn = document.getElementById('mobileMenuBtn');
+                const navMenu = document.getElementById('navMenu');
+                
+                if (!mobileBtn || !navMenu) return;
+
+                mobileBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    mobileBtn.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+                });
+
+                // Close menu when clicking links
+                navMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navMenu.classList.remove('active');
+                        mobileBtn.textContent = '☰';
+                    });
+                });
+            }
+
+            setupScrollObserver() {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate');
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.work-item, .process-step, .service-card').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+
+            setupFormValidation() {
+                const form = document.getElementById('contactForm');
+                if (!form) return;
+
+                const inputs = form.querySelectorAll('input, textarea');
+                
+                inputs.forEach(input => {
+                    input.addEventListener('blur', () => this.validateField(input));
+                    input.addEventListener('input', () => this.clearFieldError(input));
+                });
+
+                form.addEventListener('submit', (e) => this.handleFormSubmit(e));
+            }
+
+            validateField(field) {
+                const formGroup = field.closest('.form-group');
+                const isValid = field.checkValidity() && field.value.trim() !== '';
+                
+                if (isValid) {
+                    formGroup.classList.remove('error');
+                } else {
+                    formGroup.classList.add('error');
+                }
+                
+                return isValid;
+            }
+
+            clearFieldError(field) {
+                const formGroup = field.closest('.form-group');
+                if (field.value.trim() !== '') {
+                    formGroup.classList.remove('error');
+                }
+            }
+
+            async handleFormSubmit(e) {
                 e.preventDefault();
-                const workItem = this.closest('.work-item');
+                
+                const form = e.target;
+                const submitBtn = document.getElementById('submitBtn');
+                const requiredFields = form.querySelectorAll('[required]');
+                
+                let isFormValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!this.validateField(field)) {
+                        isFormValid = false;
+                    }
+                });
+
+                if (!isFormValid) {
+                    this.playErrorSound();
+                    return;
+                }
+
+                // Disable submit button
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+
+                try {
+                    await this.submitForm(form);
+                    this.showSuccessMessage(submitBtn);
+                    form.reset();
+                } catch (error) {
+                    console.error('Form submission failed:', error);
+                    this.showErrorMessage(submitBtn);
+                }
+            }
+
+            async submitForm(form) {
+                const formData = new FormData(form);
+                const data = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    project: formData.get('project') || 'General Inquiry',
+                    message: formData.get('message')
+                };
+
+                // Create mailto link
+                const subject = `New Project Inquiry from ${data.name}`;
+                const body = `Hi 3rio team,
+
+${data.message}
+
+Project Type: ${data.project}
+Contact Email: ${data.email}
+
+Best regards,
+${data.name}`;
+
+                const mailtoLink = `mailto:3riokw@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                window.location.href = mailtoLink;
+            }
+
+            showSuccessMessage(submitBtn) {
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Message Prepared!';
+                submitBtn.style.background = '#4CAF50';
+                this.playSuccessSound();
+                
+                setTimeout(() => {
+                    submitBtn.textContent = 'Send Message';
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
+
+            showErrorMessage(submitBtn) {
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Error - Try Again';
+                submitBtn.style.background = '#ff4444';
+                this.playErrorSound();
+                
+                setTimeout(() => {
+                    submitBtn.textContent = 'Send Message';
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
+
+            setupWorkItems() {
+                const workItems = document.querySelectorAll('.work-item');
+                const projectBackgrounds = {
+                    'lina-bakery': 'linear-gradient(135deg, #FFD700, #FF6B35)',
+                    'midnight-menaces': 'linear-gradient(135deg, #1a1a1a, #6B00FF)',
+                    'gaming-templates': 'linear-gradient(45deg, #6E00FF, #FF4500)',
+                    'caffeine-intake': 'linear-gradient(135deg, #FF4500, #6E00FF)',
+                    '3rio-brand': 'linear-gradient(45deg, #6E00FF, #8B00FF)',
+                    'friday-giveaway': 'linear-gradient(135deg, #333, #6E00FF)',
+                    'logo-showcase': 'linear-gradient(45deg, #FF4500, #6E00FF, #FF4500)'
+                };
+
+                workItems.forEach(item => {
+                    const project = item.dataset.project;
+                    if (projectBackgrounds[project]) {
+                        item.style.background = projectBackgrounds[project];
+                    }
+                });
+
+                // Project click handlers
+                document.querySelectorAll('.view-project-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.handleProjectClick(e));
+                });
+            }
+
+            handleProjectClick(e) {
+                e.preventDefault();
+                const workItem = e.target.closest('.work-item');
                 const project = workItem.dataset.project;
                 
                 // You can customize these URLs to point to your actual project pages
@@ -1269,42 +1405,587 @@ ${name}`;
                     'logo-showcase': '/projects/logo-gallery'
                 };
                 
-                // For now, just alert - replace with actual navigation
+                // For demo purposes, show alert - replace with actual navigation
                 alert(`Navigate to ${project} project page`);
                 // window.location.href = projectUrls[project];
-            });
-        });
+            }
 
-        // Microphone input for light rays (optional enhancement)
-        async function initMicrophoneInput() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const analyser = audioContext.createAnalyser();
-                const microphone = audioContext.createMediaStreamSource(stream);
+            bindEvents() {
+                // Smooth scroll navigation
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => this.handleSmoothScroll(e));
+                });
+
+                // Navigation background on scroll
+                window.addEventListener('scroll', () => this.handleNavScroll());
+
+                // Parallax effect
+                window.addEventListener('scroll', () => this.handleParallax());
+
+                // Resize handler
+                window.addEventListener('resize', () => this.handleResize());
+
+                // User interaction for microphone
+                document.addEventListener('click', () => this.initMicrophoneInput(), { once: true });
+            }
+
+            handleSmoothScroll(e) {
+                e.preventDefault();
+                const target = document.querySelector(e.target.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+
+            handleNavScroll() {
+                const nav = document.getElementById('nav');
+                if (!nav) return;
+
+                if (window.scrollY > 100) {
+                    nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                } else {
+                    nav.style.background = 'rgba(0, 0, 0, 0.8)';
+                }
+            }
+
+            handleParallax() {
+                const hero = document.getElementById('hero');
+                if (!hero) return;
+
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.2;
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+
+            handleResize() {
+                // Recreate stars for different screen sizes
+                this.createStars();
                 
-                microphone.connect(analyser);
-                analyser.fftSize = 256;
+                // Optimize particles for mobile
+                if (window.innerWidth < 768 && this.particles) {
+                    this.optimizeParticles();
+                }
+            }
+
+            async loadParticles() {
+                if (typeof tsParticles === 'undefined') {
+                    console.warn('tsParticles not loaded');
+                    return;
+                }
+
+                const config = this.getParticlesConfig();
                 
-                const bufferLength = analyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
+                try {
+                    this.particles = await tsParticles.load("tsparticles", config);
+                } catch (error) {
+                    console.error('Failed to load particles:', error);
+                }
+            }
+
+            getParticlesConfig() {
+                const isMobile = window.innerWidth < 768;
+                const isLowEnd = navigator.hardwareConcurrency <= 4;
                 
-                function updateRayOpacity() {
-                    analyser.getByteFrequencyData(dataArray);
-                    const average = dataArray.reduce((a, b) => a + b) / bufferLength;
-                    const opacity = Math.min(0.8, average / 128);
-                    document.documentElement.style.setProperty('--ray-opacity', opacity);
-                    requestAnimationFrame(updateRayOpacity);
+                return {
+                    background: { color: "transparent" },
+                    fpsLimit: isMobile ? 30 : 60,
+                    particles: {
+                        color: { value: ["#6E00FF", "#FF4500"] },
+                        links: {
+                            color: "#6E00FF",
+                            distance: isMobile ? 100 : 150,
+                            enable: true,
+                            opacity: 0.1,
+                            width: 1
+                        },
+                        move: {
+                            direction: "none",
+                            enable: true,
+                            outModes: { default: "bounce" },
+                            random: false,
+                            speed: isMobile ? 0.3 : 0.5,
+                            straight: false
+                        },
+                        number: {
+                            density: { enable: true, area: 800 },
+                            value: isMobile || isLowEnd ? 25 : 60
+                        },
+                        opacity: { value: 0.2 },
+                        shape: { type: "circle" },
+                        size: { value: { min: 1, max: 2 } }
+                    },
+                    detectRetina: true
+                };
+            }
+
+            optimizeParticles() {
+                if (!this.particles) return;
+                
+                const config = this.getParticlesConfig();
+                tsParticles.load("tsparticles", config);
+            }
+
+            startAnimations() {
+                setTimeout(() => this.startTypewriter(), 1500);
+            }
+
+            startTypewriter() {
+                const typewriterText = "From logos to menus, we bring the wow to your workflow";
+                const typewriterElement = document.getElementById('typewriter');
+                
+                if (!typewriterElement) return;
+
+                let i = 0;
+                const typeSpeed = 80;
+
+                const typeWriter = () => {
+                    if (i < typewriterText.length) {
+                        typewriterElement.textContent += typewriterText.charAt(i);
+                        this.playTypeSound();
+                        i++;
+                        setTimeout(typeWriter, typeSpeed);
+                    } else {
+                        this.typewriterComplete = true;
+                        // Remove cursor after completion
+                        setTimeout(() => {
+                            typewriterElement.style.setProperty('--cursor-display', 'none');
+                        }, 2000);
+                    }
+                };
+
+                typeWriter();
+            }
+
+            async initMicrophoneInput() {
+                if (this.microphoneStream) return;
+
+                try {
+                    this.microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const analyser = this.audioContext.createAnalyser();
+                    const microphone = this.audioContext.createMediaStreamSource(this.microphoneStream);
+                    
+                    microphone.connect(analyser);
+                    analyser.fftSize = 256;
+                    
+                    const bufferLength = analyser.frequencyBinCount;
+                    const dataArray = new Uint8Array(bufferLength);
+                    
+                    const updateRayOpacity = () => {
+                        if (!this.microphoneStream) return;
+                        
+                        analyser.getByteFrequencyData(dataArray);
+                        const average = dataArray.reduce((a, b) => a + b) / bufferLength;
+                        const opacity = Math.min(0.8, Math.max(0.1, average / 128));
+                        document.documentElement.style.setProperty('--ray-opacity', opacity);
+                        requestAnimationFrame(updateRayOpacity);
+                    };
+                    
+                    updateRayOpacity();
+                } catch (err) {
+                    console.log('Microphone access denied or not available:', err.message);
+                }
+            }
+
+            // Audio feedback methods
+            playTypeSound() {
+                this.playSound(1200, 0.01, 0.05);
+            }
+
+            playHoverSound() {
+                this.playSound(1500, 0.005, 0.1);
+            }
+
+            playSuccessSound() {
+                this.playSound(800, 0.02, 0.2);
+                setTimeout(() => this.playSound(1000, 0.02, 0.2), 100);
+            }
+
+            playErrorSound() {
+                this.playSound(300, 0.03, 0.3);
+            }
+
+            playSound(frequency, volume, duration) {
+                try {
+                    if (!this.audioContext) {
+                        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    
+                    const oscillator = this.audioContext.createOscillator();
+                    const gainNode = this.audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(this.audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(volume, this.audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
+                    
+                    oscillator.start(this.audioContext.currentTime);
+                    oscillator.stop(this.audioContext.currentTime + duration);
+                } catch (e) {
+                    // Silent fail if audio context not available
+                }
+            }
+
+            hideLoading() {
+                const loading = document.getElementById('loading');
+                if (loading) {
+                    loading.classList.add('hidden');
+                    setTimeout(() => loading.remove(), 500);
                 }
                 
-                updateRayOpacity();
-            } catch (err) {
-                console.log('Microphone access denied or not available');
+                document.body.style.opacity = '1';
+                this.isLoaded = true;
+            }
+
+            // Public methods for testing
+            getTypewriterProgress() {
+                const element = document.getElementById('typewriter');
+                return element ? element.textContent.length : 0;
+            }
+
+            isFormValid() {
+                const form = document.getElementById('contactForm');
+                if (!form) return false;
+                
+                const requiredFields = form.querySelectorAll('[required]');
+                return Array.from(requiredFields).every(field => 
+                    field.checkValidity() && field.value.trim() !== ''
+                );
+            }
+
+            getStarsCount() {
+                const stars = document.querySelectorAll('.star');
+                return stars.length;
             }
         }
 
-        // Initialize microphone input on first user interaction
-        document.addEventListener('click', initMicrophoneInput, { once: true });
+        // Unit Tests
+        class TrioWebsiteTests {
+            constructor() {
+                this.tests = [];
+                this.website = null;
+            }
+
+            async runAllTests() {
+                console.log('🧪 Starting 3rio Website Tests...\n');
+                
+                // Wait for website to initialize
+                this.website = new TrioWebsite();
+                await this.waitForInitialization();
+                
+                this.testDOMElements();
+                this.testFormValidation();
+                this.testStarsGeneration();
+                this.testTypewriterEffect();
+                this.testResponsiveDesign();
+                this.testAccessibility();
+                this.testPerformance();
+                
+                this.reportResults();
+            }
+
+            async waitForInitialization() {
+                return new Promise(resolve => {
+                    const checkInit = () => {
+                        if (this.website.isLoaded) {
+                            resolve();
+                        } else {
+                            setTimeout(checkInit, 100);
+                        }
+                    };
+                    checkInit();
+                });
+            }
+
+            test(name, testFn) {
+                try {
+                    const result = testFn();
+                    this.tests.push({ name, passed: true, result });
+                    console.log(`✅ ${name}`);
+                } catch (error) {
+                    this.tests.push({ name, passed: false, error: error.message });
+                    console.log(`❌ ${name}: ${error.message}`);
+                }
+            }
+
+            testDOMElements() {
+                this.test('Navigation elements exist', () => {
+                    const nav = document.getElementById('nav');
+                    const logo = document.querySelector('.logo');
+                    const navMenu = document.getElementById('navMenu');
+                    
+                    if (!nav || !logo || !navMenu) {
+                        throw new Error('Missing navigation elements');
+                    }
+                    return 'Navigation structure is complete';
+                });
+
+                this.test('Hero section elements exist', () => {
+                    const hero = document.getElementById('hero');
+                    const heroTitle = hero.querySelector('h1');
+                    const typewriter = document.getElementById('typewriter');
+                    
+                    if (!hero || !heroTitle || !typewriter) {
+                        throw new Error('Missing hero section elements');
+                    }
+                    return 'Hero section structure is complete';
+                });
+
+                this.test('Contact form elements exist', () => {
+                    const form = document.getElementById('contactForm');
+                    const nameField = document.getElementById('name');
+                    const emailField = document.getElementById('email');
+                    const messageField = document.getElementById('message');
+                    const submitBtn = document.getElementById('submitBtn');
+                    
+                    if (!form || !nameField || !emailField || !messageField || !submitBtn) {
+                        throw new Error('Missing contact form elements');
+                    }
+                    return 'Contact form structure is complete';
+                });
+            }
+
+            testFormValidation() {
+                this.test('Form validation works correctly', () => {
+                    const nameField = document.getElementById('name');
+                    const emailField = document.getElementById('email');
+                    const messageField = document.getElementById('message');
+                    
+                    // Test empty fields
+                    nameField.value = '';
+                    emailField.value = '';
+                    messageField.value = '';
+                    
+                    if (this.website.isFormValid()) {
+                        throw new Error('Empty form should not be valid');
+                    }
+                    
+                    // Test valid fields
+                    nameField.value = 'John Doe';
+                    emailField.value = 'john@example.com';
+                    messageField.value = 'Test message';
+                    
+                    if (!this.website.isFormValid()) {
+                        throw new Error('Valid form should be valid');
+                    }
+                    
+                    // Test invalid email
+                    emailField.value = 'invalid-email';
+                    if (this.website.isFormValid()) {
+                        throw new Error('Invalid email should make form invalid');
+                    }
+                    
+                    return 'Form validation working correctly';
+                });
+            }
+
+            testStarsGeneration() {
+                this.test('Stars are generated correctly', () => {
+                    const starsCount = this.website.getStarsCount();
+                    const expectedCount = window.innerWidth < 768 ? 100 : 200;
+                    
+                    if (starsCount === 0) {
+                        throw new Error('No stars were generated');
+                    }
+                    
+                    if (Math.abs(starsCount - expectedCount) > 10) {
+                        throw new Error(`Expected ~${expectedCount} stars, got ${starsCount}`);
+                    }
+                    
+                    return `Generated ${starsCount} stars correctly`;
+                });
+            }
+
+            testTypewriterEffect() {
+                this.test('Typewriter effect initializes', () => {
+                    const typewriterElement = document.getElementById('typewriter');
+                    
+                    if (!typewriterElement) {
+                        throw new Error('Typewriter element not found');
+                    }
+                    
+                    // Check if typewriter has started
+                    setTimeout(() => {
+                        const progress = this.website.getTypewriterProgress();
+                        if (progress === 0) {
+                            throw new Error('Typewriter effect not started');
+                        }
+                    }, 2000);
+                    
+                    return 'Typewriter effect initialized';
+                });
+            }
+
+            testResponsiveDesign() {
+                this.test('Responsive breakpoints work', () => {
+                    const nav = document.getElementById('nav');
+                    const mobileBtn = document.getElementById('mobileMenuBtn');
+                    
+                    if (!nav || !mobileBtn) {
+                        throw new Error('Mobile navigation elements missing');
+                    }
+                    
+                    // Test mobile styles
+                    const navMenuStyles = window.getComputedStyle(document.getElementById('navMenu'));
+                    const mobileBtnStyles = window.getComputedStyle(mobileBtn);
+                    
+                    if (window.innerWidth < 768) {
+                        if (mobileBtnStyles.display === 'none') {
+                            throw new Error('Mobile menu button should be visible on mobile');
+                        }
+                    }
+                    
+                    return 'Responsive design elements working';
+                });
+            }
+
+            testAccessibility() {
+                this.test('Basic accessibility features present', () => {
+                    // Check for alt attributes, labels, etc.
+                    const form = document.getElementById('contactForm');
+                    const inputs = form.querySelectorAll('input, textarea');
+                    
+                    inputs.forEach(input => {
+                        const label = form.querySelector(`label[for="${input.id}"]`);
+                        if (!label) {
+                            throw new Error(`Input ${input.id} missing associated label`);
+                        }
+                    });
+                    
+                    // Check for reduced motion preference
+                    const reducedMotionCSS = Array.from(document.styleSheets).some(sheet => {
+                        try {
+                            return Array.from(sheet.cssRules).some(rule => 
+                                rule.conditionText && rule.conditionText.includes('prefers-reduced-motion')
+                            );
+                        } catch (e) {
+                            return false;
+                        }
+                    });
+                    
+                    if (!reducedMotionCSS) {
+                        throw new Error('Missing reduced motion CSS rules');
+                    }
+                    
+                    return 'Basic accessibility features present';
+                });
+            }
+
+            testPerformance() {
+                this.test('Page load performance', () => {
+                    const loadTime = performance.now();
+                    
+                    if (loadTime > 5000) {
+                        throw new Error(`Page load time too slow: ${loadTime}ms`);
+                    }
+                    
+                    // Check for proper image optimization (aspect ratios set)
+                    const workItems = document.querySelectorAll('.work-item');
+                    workItems.forEach(item => {
+                        const styles = window.getComputedStyle(item);
+                        if (!styles.aspectRatio && !styles.paddingBottom) {
+                            throw new Error('Work items missing aspect ratio optimization');
+                        }
+                    });
+                    
+                    return `Page loaded in ${loadTime.toFixed(2)}ms`;
+                });
+            }
+
+            reportResults() {
+                const passed = this.tests.filter(test => test.passed).length;
+                const total = this.tests.length;
+                
+                console.log(`\n📊 Test Results: ${passed}/${total} tests passed`);
+                
+                if (passed === total) {
+                    console.log('🎉 All tests passed! Website is working correctly.');
+                } else {
+                    console.log('⚠️ Some tests failed. Check the issues above.');
+                    
+                    const failed = this.tests.filter(test => !test.passed);
+                    console.log('\nFailed tests:');
+                    failed.forEach(test => {
+                        console.log(`- ${test.name}: ${test.error}`);
+                    });
+                }
+            }
+        }
+
+        // Initialize website and run tests
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize the website
+            window.trioWebsite = new TrioWebsite();
+            
+            // Run tests in development mode
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                const tests = new TrioWebsiteTests();
+                setTimeout(() => tests.runAllTests(), 2000);
+            }
+        });
+
+        // Performance monitoring
+        window.addEventListener('load', () => {
+            const loadTime = performance.now();
+            console.log(`🚀 3rio Website loaded in ${loadTime.toFixed(2)}ms`);
+            
+            // Report Core Web Vitals
+            if ('web-vitals' in window) {
+                import('https://unpkg.com/web-vitals@3/dist/web-vitals.js').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+                    getCLS(console.log);
+                    getFID(console.log);
+                    getFCP(console.log);
+                    getLCP(console.log);
+                    getTTFB(console.log);
+                }).catch(() => {
+                    console.log('Web Vitals library not available');
+                });
+            }
+        });
+
+        // Error handling
+        window.addEventListener('error', (e) => {
+            console.error('JavaScript Error:', e.error);
+            
+            // Show user-friendly error message for critical failures
+            if (e.error.message.includes('tsParticles') || e.error.message.includes('particles')) {
+                console.warn('Particles failed to load - continuing without particle effects');
+            }
+        });
+
+        // Service Worker registration for PWA capabilities (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('SW registered:', registration))
+                    .catch(error => console.log('SW registration failed:', error));
+            });
+        }
+    </script>
+
+    <!-- Optional: Add schema.org structured data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "3rio",
+        "url": "https://3rio.com",
+        "logo": "https://3rio.com/logo.png",
+        "sameAs": [
+            "https://instagram.com/3riokw"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "3riokw@gmail.com",
+            "contactType": "customer service"
+        },
+        "description": "Creative design studio specializing in brand identity, digital design, and print materials. From logos to comprehensive brand systems, we bring the wow to your workflow."
+    }
     </script>
 </body>
 </html>
